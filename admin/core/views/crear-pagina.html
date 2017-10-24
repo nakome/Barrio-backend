@@ -1,0 +1,66 @@
+<?php
+
+    $directorio = str_replace(ROOTBASE.'/content/','',$name);
+    $directorio = str_replace('\\', '/', $directorio);
+    $directorio = rtrim($directorio, '/');
+
+    $dirExist = ($directorio) ? $directorio.'/' : '';
+
+    if(Url::post('crear')){
+        if(Token::check(Url::post('token'))){
+            $date = date('d/m/Y');
+            $html = "Title: Titulo de la pagina
+Description: descripcion de la pagina
+Keywords:
+Published: false
+Author: me
+Date: $date
+Image:
+Robots: noindex,nofollow
+Template: index
+----\n";
+            $archivo = ROOTBASE.'/content/'.$dirExist.Url::parse(Url::post('url')).'.md';
+            if(!File::exists($archivo)){
+                File::setContent($archivo,$html);
+                Message::set('Bien !','El pagina ha sido creada');
+                Url::redirect(Url::base().'/editar/archivo/'.base64_encode($dirExist.Url::parse(Url::post('url'))));
+                exit;
+            }else{
+                Message::set('Error !','La pagina ya existe');
+                Url::redirect(Url::base().'/crear/pagina');
+                exit;
+            }
+        }else{
+            die('CRSF detectado!');
+        }
+    }
+?>
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                <strong>Seccion: </strong>Crear Pagina
+            </div>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="bg-white b-light p-5">
+                        <h5 class="b-bottom-dark text-dark m-1">Esciba el nombre de la pagina</h5>
+                        <form method="post">
+                            <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                            <input type="text" name="url" id="url" value="nombre-de-la-pagina" required>
+                            <input type="submit" name="crear" class="btn btn-primary" value="Crear Pagina">
+                            <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

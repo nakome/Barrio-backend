@@ -1,0 +1,43 @@
+<?php
+    if(Url::post('borrar')){
+        if(Token::check(Url::post('token'))){
+            Dir::delete(ROOTBASE.'/content/'.$name);
+            if(!Dir::exists(ROOTBASE.'/content/'.$name)){
+                if(Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
+                    Dir::delete(ROOTBASE.'/content/imagenes/'.$name);
+                }
+                Message::set('Bien !','El directorio ha sido borrado');
+                Url::redirect(Url::base());
+            }
+        }else{
+            die('CRSF detectado!');
+        }
+    }
+?>
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-danger b-left-danger bg-danger text-white p-3 pl-5">
+                <strong>Seccion: </strong>informacion
+            </div>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="bg-white b-light p-5">
+                        <h5 class="b-bottom-danger text-danger m-1 mb-4">Esta seguro de borrar el directorio ? </h5>
+                        <form method="post">
+                            <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                            <input type="submit" name="borrar" class="btn btn-primary" value="Borrar Directorio">
+                             <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

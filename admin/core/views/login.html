@@ -1,0 +1,19 @@
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page" class="full-screen fixed center vertical-align">
+    <main id="wrapper">
+        <div id="content">
+            <div class="card" style="max-width:350px;margin:auto">
+                <div class="card-header text-center">
+                    <img src="<?php echo Url::base();?>/core/assets/logo.svg" alt="">
+                </div>
+                <form method="post" class="card-body p-5">
+                    <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                    <input name="password" type="password"  class="mb-4" required placeholder="*****************">
+                    <input class="btn btn-danger" name="auth" type="submit" value="Entrar">
+                    <a href="<?php echo Url::web();?>" class="btn btn-info">Volver</a>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

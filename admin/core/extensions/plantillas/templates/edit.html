@@ -1,0 +1,124 @@
+<?php Plantillas::saveFile($name);?>
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                <a class="text-deco-none text-success" href="<?php echo Url::base();?>/extension/plantillas">Plantillas</a> / editar
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div id="acordeon" class="accordion mt-2 mb-2 ">
+                        <div class="accordion-title">
+                            <a class="active">Html</a>
+                        </div>
+                        <div class="accordion-content bg-dark text-white active">
+                            <ul class="list-unstyled">
+                                <?php
+                                    $html = Plantillas::load('html');
+                                    $output = '';
+                                    foreach($html as $item){
+                                       if(preg_match("/inc/i",$item)){
+                                            $output .= '<li>
+                                                    <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                        <span class="text-info">inc/</span> '.File::name($item).'.'.File::ext($item).'
+                                                    </a>
+                                                </li>';
+                                       }else{
+                                            $output .= '<li>
+                                                    <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                        '.File::name($item).'.'.File::ext($item).'
+                                                    </a>
+                                                </li>';
+                                       }
+                                    }
+                                    echo $output;
+                                ?>
+                            </ul>
+                        </div>
+                        <div class="accordion-title">
+                            <a class="">Css</a>
+                        </div>
+                        <div class="accordion-content bg-dark text-white  hide">
+                            <ul class="list-unstyled">
+                                <?php
+                                    $css = Plantillas::load('css');
+                                    $outputCss = '';
+                                    foreach($css as $item){
+                                        $outputCss .= '<li>
+                                                <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                    '.File::name($item).'.'.File::ext($item).'
+                                                </a>
+                                            </li>';
+                                    }
+                                    echo $outputCss;
+                                ?>
+                            </ul>
+                        </div>
+                        <div class="accordion-title">
+                            <a class="">Javascript</a>
+                        </div>
+                        <div class="accordion-content bg-dark text-white  hide">
+                            <ul class="list-unstyled">
+                                <?php
+                                    $js = Plantillas::load('js');
+                                    foreach($js as $item){
+                                        echo '<li>
+                                            <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                '.File::name($item).'.'.File::ext($item).'
+                                            </a>
+                                        </li>';
+                                    }
+                                ?>
+                            </ul>
+                            </div>
+                        <div class="accordion-title">
+                            <a class="">Php</a>
+                        </div>
+                        <div class="accordion-content bg-dark text-white  hide">
+                            <ul class="list-unstyled">
+                                <?php
+                                    $php = Plantillas::load('php');
+                                    $outputPhp = '';
+                                    foreach($php as $item){
+                                       if(preg_match("/funciones/i",$item)){
+                                            $outputPhp .= '<li>
+                                                    <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                        <span class="text-info">funciones/</span> '.File::name($item).'.'.File::ext($item).'
+                                                    </a>
+                                                </li>';
+                                       }else{
+                                            $outputPhp .= '<li>
+                                                    <a class="text-light text-deco-none" href="'.Url::base().'/extension/plantillas/editar/'.base64_encode($item).'">
+                                                        '.File::name($item).'.'.File::ext($item).'
+                                                    </a>
+                                                </li>';
+                                       }
+                                    }
+                                    echo $outputPhp;
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <h3 class="b-bottom-dark text-dark">
+                        Archivo  <span class="text-success"><?php echo File::name($name).'.'.File::ext($name);?></span>
+                    </h3>
+                    <div class="bg-white p-4 mt-3 mb-3">
+                        <form method="post">
+                            <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                            <textarea name="content" class="bg-dark text-white" style="min-height:30em"><?php echo htmlentities(File::getContent($name));?></textarea>
+                            <input type="submit" name="guardar" class="btn btn-primary" value="Guardar">
+                            <input type="submit" name="guardarysalir" class="btn btn-info" value="Guardar y Salir">
+                        </form>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

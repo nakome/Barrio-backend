@@ -1,0 +1,139 @@
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper" >
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+
+            <div class="bg-dark text-white p-3 pl-5"> Dashboard</div>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="dashboard b-top-dark bg-white p-5">
+                        <div class="text-dark b-bottom-dark p-1 m-1">
+                            Paginas
+                            <small class="pull-right ml-3">
+                                <i class="icon-circle-with-plus text-dark"></i>
+                                <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/crear/pagina">
+                                    Pagina
+                                </a>
+                            </small>
+                            <small class="pull-right">
+                                <i class="icon-folder text-dark"></i>
+                                <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/crear/directorio">
+                                    Directorio
+                                </a>
+                            </small>
+                        </div>
+                        <ul class="list-unstyled pr-2" style="height:10em;overflow-x:auto;">
+                        <?php
+                            $dir = Dir::scan(ROOTBASE.'/content');
+                            foreach($dir as $item){
+                                if($item == 'imagenes') continue;
+                                echo '<li>
+                                        <a  class="text-dark text-deco-none"
+                                            href="'.Url::base().'/editar/directorio/'.base64_encode(File::name($item)).'">
+                                            <b>'.$item.': </b> <span class="pull-right text-danger">'.(count(File::scan(ROOTBASE.'/content/'.$item)) - 1).'</span>
+                                        </a>
+                                    </li>';
+                            }
+                            $directorio = ROOTBASE.'/content';
+                            $files = array_diff(scandir($directorio), array('..', '.'));
+                            foreach($files as $file){
+                                if(is_dir(ROOTBASE.'/content/'.$file)){
+                                    continue;
+                                }
+
+                                echo '<li>
+                                        <a  class="text-dark text-deco-none"
+                                            href="'.Url::base().'/editar/archivo/'.base64_encode(File::name($file)).'">
+                                            '.$file.'
+                                        </a>
+                                    </li>';
+                            }
+                        ?>
+                     </ul>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="dashboard b-top-dark bg-white p-5">
+                        <div class="text-dark b-bottom-dark p-1 m-1">Notas</div>
+                        <textarea class="bg-dark b-dark text-white" name="php" id="php" style="height:160px;overflow-x:auto;"></textarea>
+                        <script>
+                            document.querySelector('#php').value = window.localStorage.getItem('note');
+                            document.querySelector('#php').addEventListener('keyup',(e) =>{
+                                e.preventDefault();
+                                window.localStorage.setItem('note',document.querySelector('#php').value);
+                                return false;
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="dashboard b-top-dark bg-white p-5">
+                        <div class="text-dark b-bottom-dark p-1 m-1">
+                            Log
+                            <small class="pull-right">
+                                <i class="icon-trash text-dark"></i>
+                                <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/borrar/log">
+                                    Borrar
+                                </a>
+                            </small>
+                        </div>
+                        <ul class="list-unstyled" style="height:10em;overflow-x:auto;"> 
+                            <?php 
+                                $data = Admin::getLog();
+                                foreach($data as $item){
+                                    echo '<li><small><b  class="text-danger">'.$item['date'].': </b> <em>'.$item['desc'].'</em></small></li>';
+                                }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="dashboard b-top-dark bg-white p-5">
+                        <div class="text-dark b-bottom-dark p-1">Direccion Web</div>
+                        <section class="bg-light b-dark p-3 mt-5 mb-3">
+                            <i class="icon-link text-danger"></i> <a class="ml-3 text-dark text-deco-none"target="_blank" href="<?php echo Url::web();?>"><?php echo Url::web();?></a>
+                        </section>
+                        <section class="updates text-white mt-2 p-3 b-danger bg-danger">Actualizado a la version v1.0</section>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="dashboard b-top-dark bg-white p-5">
+                        <?php
+                            function check($name) {
+                                $setting = (ini_get($name));
+                                $setting = ($setting==1 || $setting=='On') ? 'On' : 'Off';
+                                return $setting;
+                            }
+                        ?>
+                        <div class="text-dark b-bottom-dark p-1">Informacion Servidor</div>
+                        <ul class="list-unstyled p-2">
+                            <li><b>Server Type:</b> <?php print $_SERVER['SERVER_SOFTWARE']; ?></li>
+                            <li><b>PHP Version:</b> <?php print phpversion()?></li>
+                            <li><b>File Uploads:</b> <?php print check('file_uploads'); ?></li>
+                            <li><b>Safe Mode:</b>  <?php print check('safe_mode'); ?></li>
+                            <li><b>Zip Extension:</b> <?php if (extension_loaded('zip')) echo "On";else echo "Off";?></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="dashboard b-top-dark  bg-white p-5">
+                        <div class="text-dark b-bottom-dark p-1">Permisos</div>
+                        <ul class="list-unstyled p-2">
+                            <?php clearstatcache(); ?>
+                            <li><b>Admin: </b> <?php echo substr(sprintf('%o', fileperms(ROOT)), -4); ?></li>
+                            <li><b>Content: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/content')), -4); ?></li>
+                            <li><b>Extensions: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/extensions')), -4); ?></li>
+                            <li><b>Themes: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/themes')), -4); ?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

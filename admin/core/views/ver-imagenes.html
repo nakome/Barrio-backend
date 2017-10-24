@@ -1,0 +1,87 @@
+<?php
+    $imagen = str_replace(ROOTBASE,Url::web(),$name);
+    $info = File::info($name);
+
+    $linkVolver = str_replace(ROOTBASE.'/content/imagenes/','',$name);
+    $linkVolver = str_replace(File::name($name).'.'.File::ext($name),'',$linkVolver);
+    $linkVolver = str_replace('\\', '/', $linkVolver);
+    $linkVolver = rtrim($linkVolver, '/');
+
+    if(Url::post('borrar')){
+        if(Token::check(Url::post('token'))){
+            File::delete($name);
+            if(!Dir::exists($name)){
+                Message::set('Bien !','El archivo ha sido borrado');
+                Url::redirect(Url::base().'/editar/archivo/'.base64_encode($linkVolver));
+                exit;
+            }else{
+                Message::set('Error !','No se ha podido borrar el archivo');
+                exit;
+            }
+        }else{
+            die('CRSF detectado!');
+        }
+    }
+
+    $directorioDelArchivo = str_replace(File::name($name).'.'.File::ext($name),'',$name);
+    if(Url::post('renombrar')){
+        if(Token::check(Url::post('token'))){
+            $nuevoNombre = $directorioDelArchivo.Url::parse(Url::post('name')).'.'.File::ext($name);
+            File::rename($name,$nuevoNombre);
+            if(File::exists($nuevoNombre)){
+                Message::set('Bien !','El archivo ha sido renombrado');
+                Url::redirect(Url::base().'/ver/imagen/'.base64_encode($nuevoNombre));
+                exit;
+            }else{
+                Message::set('Error !','No se ha podido cambiar el nombre de el archivo');
+                exit;
+            }
+        }else{
+            die('CRSF detectado!');
+        }
+    }
+?>
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+               <strong>Seccion: </strong>Ver Imagenes
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <div class="bg-white p-5">
+                        <?php
+                            $AllowedExtensions = array('gif','jpeg','jpg','png','svg');
+                            $html = '';
+                            if(in_array(File::ext($name), $AllowedExtensions)){
+                                $html .= '<div class="image-preview center"><img src="'.$imagen.'" alt="" style="max-width:100%;"></div>';
+                                $html .= '<pre class="bg-dark text-white p-3" style="overflow-x:auto;">![]('.$imagen.')</pre>';
+                            }
+                            echo $html;
+                        ?>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="b-bottom-dark text-dark"><i class="icon-info mr-2"></i> Informacion</div>
+                    <form method="post" class="list-unstyled bg-white p-2">
+                        <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                        <input type="text" name="name" value="<?php echo File::name($info['name']);?>">
+                        <input type="text" class="bg-light text-dark" disabled value="Fecha de subida: <?php echo $info['date'];?>">
+                        <input type="text" class="bg-light text-dark" disabled value="Tamaño: <?php echo $info['size'];?>">
+                        <input type="text" class="bg-light text-dark" disabled value="Permisos: <?php echo substr(sprintf('%o', $info['fileperms']), -4);?>">
+
+                        <input type="submit" name="borrar" onclick="return confirm('Estas seguro!')" class="btn btn-danger" value="Borrar archivo">
+                        <input type="submit" name="renombrar" class="btn btn-primary" value="Renombrar">
+                        <a class="btn btn-info" href="<?php echo Url::base();?>/editar/archivo/<?php echo base64_encode($linkVolver);?>">Volver</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

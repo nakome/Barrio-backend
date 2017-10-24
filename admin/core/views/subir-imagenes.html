@@ -1,0 +1,72 @@
+<?php
+
+    $linkVolver = str_replace(ROOTBASE.'/content/imagenes/','',$name);
+    $linkVolver = str_replace(File::name($name).'.'.File::ext($name),'',$linkVolver);
+    $linkVolver = str_replace('\\', '/', $linkVolver);
+    $linkVolver = rtrim($linkVolver, '/');
+
+    $error = '';
+    $AllowedExtensions = array('gif','jpeg','jpg','png','svg');
+    if(Url::post('uploadFile')){
+      if(Url::post('token')){
+        $files = $_FILES['file']['name'];
+        if(!Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
+            Dir::create(ROOTBASE.'/content/imagenes/'.$name);
+        }
+        $file_size = $_FILES['file']['size'];
+        if (($file_size > 3097152)){      
+            $message = 'Archivo muy largo maximo 3mb puedes optimizarla en http://optimizilla.com/'; 
+            die($message);
+            exit;
+        }
+
+        $fileUploaded = ROOTBASE.'/content/imagenes/'.$name.'/'.Url::parse(File::name($_FILES['file']['name'])).'.'.File::ext($_FILES['file']['name']);
+
+        if(File::exists($fileUploaded)){
+            $error = '<span class="bg-danger text-white p-3">Error el archivo ya existe</span>';
+        }else{
+            if(!in_array(File::ext($_FILES['file']['name']), $AllowedExtensions)) {
+              die('Error no se permite esta extension');
+            }
+
+
+
+
+            if(move_uploaded_file($_FILES['file']['tmp_name'], $fileUploaded)) {
+              Message::set('Bien!','El archivo ha sido subido');
+              Url::redirect(Url::base().'/editar/archivo/'.base64_encode($name));
+            }
+        }
+      }else{
+        die('crsf Detect !');
+      }
+    }
+?>
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                <strong>Seccion: </strong>Subir Archivos
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="bg-white b-light p-5">
+                        <h5 class="b-bottom-danger text-danger m-1 mb-5">Subir imagen en <?php echo $name;?> </h5>
+                        <form method="post" action="" enctype="multipart/form-data">
+                            <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                            <input name="file" class="upload mb-5 p-3" type="file" required/>
+                            <br/>
+                            <input class="btn btn-primary"  type="submit" name="uploadFile" value="Subir imagen">
+                            <a class="btn btn-danger" href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>">Cancelar</a>
+                        </form>
+                        <?php echo $error;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>
