@@ -1,4 +1,5 @@
-## Backend de Barrio CMS
+## Vista Previa
+
 
 ![Dashboard](backend-dashboard.png)
 
@@ -7,6 +8,11 @@
 ![Full](backend-editar-full.png)
 
 ![Ver Imagen](backend-ver-imagen.png)
+
+
+### Shortcodes 
+
+![Escribiendo shortcodes](shortcodes.gif)
 
 
 ### Instalación
