@@ -12,7 +12,7 @@
 
 ### Shortcodes 
 
-![Escribiendo shortcodes](shortcodes.gif)
+![Escribiendo shortcodes](Shortcodes.gif)
 
 
 ### Instalación
