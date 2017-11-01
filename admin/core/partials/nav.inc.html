@@ -2,16 +2,23 @@
     <header>Menu</header>
     <section>
         <ul class="navigation">
-            <li class="has-dropdown"><a href="<?php echo Url::base();?>" class="link" >Dashboard</a>
-            <li class="has-dropdown">
-                <a target="_blank" class="link" href="<?php echo Url::web();?>/docs">
-                    Documentaíon
-                </a>
-            </li>
-            <?php  Admin::loadExtensions(); ?>
-            <li class="has-dropdown"><a href="<?php echo Url::base();?>/usuario/salir" class="link" >Salir</a>
+            <li><a href="<?php echo Url::base();?>" class="link" >Dashboard</a>
+            <li><a target="_blank" class="link" href="<?php echo Url::web();?>/docs">Documentaíon</a></li>
         </ul>
 
-        
+        <div id="extensiones" class="accordion m-0">
+            <div class="accordion-title bg-dark">
+                <a href="#">Extensiones</a>
+            </div>
+            <div class="accordion-content bg-dark text-white hide">
+               <ul class="list-unstyled">
+                <?php  Admin::loadExtensions(); ?>
+               </ul>
+            </div>
+        </div>
+
+        <ul class="navigation">
+            <li><a href="<?php echo Url::base();?>/usuario/salir" class="link" >Salir</a>
+        </ul>
     </section>
 </nav>

@@ -55,6 +55,11 @@ if (btnMenu) btnMenu.addEventListener('click', e => {
     e.preventDefault();
     sidebar.classList.toggle('is-opened');
     main.classList.toggle('menu-is-open');
+    if(main.classList.contains('menu-is-open')){
+        document.body.style.overflow = 'hidden';
+    }else{
+        document.body.style.overflow = 'auto';
+    }
 });
 
 page.classList.add('loaded');

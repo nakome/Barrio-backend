@@ -97,6 +97,20 @@ span.editor-divider {
 }
 
 
+/* shortcodes
+--------------------*/
+select#shortcodes {
+  width: 100px;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  background: white;
+  border-color: #cccccc;
+  color: #1e1e1e;
+  border-radius: 0px;
+}
+
+
 /* modal
 --------------------*/
 

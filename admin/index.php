@@ -27,5 +27,5 @@ if (DEV) {
     ini_set('html_errors', 0);
     error_reporting(0);
 }
-include COMPONENTS.'/Router.php';
-include CONTROLLERS.'/routes.php';
+require COMPONENTS.'/Router.php';
+require CONTROLLERS.'/routes.php';

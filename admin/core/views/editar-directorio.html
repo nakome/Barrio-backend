@@ -4,10 +4,10 @@
     $directorio = base64_encode($directorio[0]);
 
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor-dist.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor-dist.js"></script>';
     });
 ?>
 
@@ -187,12 +187,17 @@
                                         <a href="#link">link</a>
                                         <a href="#image">Img</a>
                                         <span class="editor-divider"></span>
-                                        <span class="editor-divider"></span>
-                            
-                                        <a href="#bloques">Bloques</a>
-                                        <a href="#bloque">Bloque</a>
-                                        <a href="#youtube">Youtube</a>
-
+                                        <select name="shortcodes" id="shortcodes">
+                                            <option value=""> --- </option>
+                                            <option value="bloques">{Bloques}</option>
+                                            <option value="bloque">{Bloque}</option>
+                                            <option value="servicio">{Servicio}</option>
+                                            <option value="card">{Card}</option>
+                                            <option value="alert">{Alert}</option>
+                                            <option value="btn">{Btn}</option>
+                                            <option value="icono">{Icono}</option>
+                                            <option value="youtube">{Youtube}</option>
+                                        </select>
                                         <span class="editor-divider"></span>  
                                             
                                         <a href="#" id="btnExpand" class="text-deco-none text-dark">
@@ -200,13 +205,13 @@
                                         </a>
                                     </div>
                                     <textarea name="content" class="editor-area" id="editor-area" rows="10"><?php echo $content;?></textarea>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input class="btn btn-primary mt-3" type="submit" name="guardar" value="Guardar">
+                                            <a href="<?php echo Url::base();?>" class="btn btn-danger mt-3">Cancelar</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <input class="btn btn-primary" type="submit" name="guardar" value="Guardar">
-                                <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
                     </form>

@@ -1,9 +1,0 @@
-[{
-    "name": "Demo",
-    "description": "Sandbox extension,demo",
-    "filename": "demo",
-    "author": "Moncho Varela",
-    "url": "https:\/\/monchovarela.es",
-    "version": "1.0.0",
-    "enabled": false
-}]

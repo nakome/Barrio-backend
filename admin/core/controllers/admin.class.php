@@ -42,8 +42,8 @@ class Admin
                 $name = $obj['filename'];
                 $enabled = $obj['enabled'];
                 if ($enabled) {
-                    echo '<li class="has-dropdown">
-                        <a href="'.Url::base().'/extension/'.$obj['filename'].'" class="link" >
+                    echo '<li class="p-2">
+                        <a href="'.Url::base().'/extension/'.$obj['filename'].'" class="text-deco-none text-light" >
                             '.$obj['name'].' <i class="text-info">ext</i>
                         </a>
                     </li>';

@@ -27,15 +27,38 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
      btn = document.querySelector('#editor-control').getElementsByTagName('a'),
      editor = new Editor(myTextArea),
      controls = {
+
         'youtube': function(){
             editor.wrap('{Youtube id="id_de_youtube', '"}');
         },
         'bloques': function(){
-            editor.wrap('{Bloques}', '{/Bloques}');
+            editor.wrap('{Bloques}', '\n{/Bloques}');
         },
         'bloque': function(){
-            editor.wrap("{Bloque col='4'}", '{/Bloque}');
+            editor.wrap("{Bloque col='4'}", '\n{/Bloque}');
         },
+        'servicio': function(){
+            editor.wrap("{Servicio icon='heart'clase='mb-5'}", '\n{/Servicio}');
+        },
+        'card': function(){
+            editor.wrap("{Card col='4' title='heart' img='image_aqui'}", '\n{/Card}');
+        },
+        'alert': function(){
+            editor.wrap("{Alert type='info'}", '\n{/Alert}');
+        },
+        'btn': function(){
+            editor.wrap("{Btn color='link' text='Link' link='","'}");
+        },
+        'icono': function(){
+            editor.wrap("{Icono type='","mobile'}");
+        },
+
+        
+
+
+        
+        
+
         'bold': function bold() {
             editor.wrap('**', '**');
         },
@@ -124,6 +147,13 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
             editor.insert('\n\n---\n\n');
         }
     };
+
+    document.querySelector('#shortcodes').addEventListener('change',function(){
+        var hash = this.value;
+        if (controls[hash]) {
+            controls[hash]();
+        }
+    });
 
     // find and add function all btn
     for (var i = 0, len = btn.length; i < len; ++i) {
