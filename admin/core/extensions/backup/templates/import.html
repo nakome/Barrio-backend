@@ -1,0 +1,29 @@
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                    <a href="<?php echo Url::base();?>/estension/backup" class="text-success">Backup</a> / Importar Backup
+            </div>
+            <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <div class="bg-white b-light p-5">
+                            <h5 class="b-bottom-danger text-danger m-1 mb-4">Importar Backup </h5>
+                            <form method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                                <input type="file" name="zip_file" class="mt-4 mb-5" />
+                                <br>
+                                <input type="submit" name="import" class="btn btn-primary" value="Importar">
+                                 <a href="<?php echo Url::base();?>/extension/backup" class="btn btn-danger">Cancelar</a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

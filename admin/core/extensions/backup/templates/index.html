@@ -1,0 +1,40 @@
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                Backup
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a href="<?php echo Url::base();?>/extension/backup/create" class="btn btn-primary">Crear Backup</a>
+                    <a href="<?php echo Url::base();?>/extension/backup/import" class="btn btn-warning">Importar Backup</a>
+                </div>
+            </div>
+            <div class="row">
+                <?php 
+                    $array = Backup::getAll();
+                    if ($array) {
+                        $html = '<div class="card-group">';
+                        foreach($array as $item){
+                            $html .= '<div class="card-block" style="max-width: 30em;">';
+                            $html .= '<div class="card-header bg-dark  text-light text-center p-3">'.File::name($item).'</div>';
+                            $html .= '<div class="card-body bg-white b-bottom-dark text-center p-5">';
+                            $html .= '<a href="'.Url::base().'/extension/backup/download/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-dark m-3">Descargar</a>';
+                            $html .= '<a href="'.Url::base().'/extension/backup/delete/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-danger m-3">Borrar</a>';
+                            $html .= '</div>';
+                            $html .= '</div>';
+                        }
+                        $html .= '</div>';
+                    } else {
+                        $html = '<div class="alert alert-warning">Ningun Backup creado</div>';
+                    }
+                    echo $html;
+                ?>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>
