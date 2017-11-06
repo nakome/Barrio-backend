@@ -72,7 +72,9 @@ class Plantillas
         if (Url::post('guardar')) {
             if (Token::check(Url::post('token'))) {
                 if (File::exists($file)) {
+                    chmod($file, 0755);
                     File::setContent($file, Url::post('content'));
+                    chmod($file, 0644);
                     Message::set('Bien !', 'El archivo ha sido actualizado');
                     Admin::log('Editado archivo '.File::name($file).' en Plantillas');
                     Url::redirect(Url::base().'/extension/plantillas/editar/'.base64_encode($file));

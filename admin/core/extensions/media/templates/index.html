@@ -1,0 +1,82 @@
+<?php
+    Action::add('head',function(){
+        $style = '<link rel="stylesheet" href="'.Url::base().'/core/extensions/media/assets/style.css" />';
+        echo $style;
+
+    });
+    Action::add('footer',function(){
+        $javascript = '<script rel="javascript" src="'.Url::base().'/core/extensions/media/assets/script.js"></script>';
+        echo $javascript;
+    });
+?>
+
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                Media
+            </div>
+            <div class="row">
+                <div class="col-4">
+
+                    <div class="card dashboard mb-4 b-top-dark bg-white text-dark">
+                        <div class="card-title p-3 b-bottom-dark text-dark">
+                            Media
+                            <span class="pull-right">
+                                <nav>
+                                    <a class="text-dark text-deco-none"
+                                        href="<?php echo Url::base(); ?>/extension/media/new/file">
+                                        <i class="icon-circle-with-plus mr-2"></i> Archivo
+                                    </a>
+                                </nav>
+                            </span>
+                        </div>
+                        <div class="card-body p-2">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="<?php echo Url::base(); ?>/extension/media/images" class="list text-deco-none text-dark p-3">
+                                        <i class="icon-picture"></i> Imagenes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo Url::base(); ?>/extension/media/video" class="list text-deco-none text-dark p-3">
+                                        <i class="icon-video"></i> Video
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo Url::base(); ?>/extension/media/music" class="list text-deco-none text-dark p-3">
+                                        <i class="icon-mic"></i> Musica
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo Url::base(); ?>/extension/media/documents" class="list text-deco-none text-dark p-3">
+                                        <i class="icon-documents"></i> Documentos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo Url::base(); ?>/extension/media/others" class="list text-deco-none text-dark p-3">
+                                        <i class="icon-toolbox"></i> Archivos Comprimidos
+                                    </a>
+                                </li>
+
+                                <li class="p-2 text-center"><b>Total: </b> <?php echo Media::format(Dir::size(ROOTBASE.'/content/imagenes'));?></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-8">
+                    <div class="thumbs">
+                        <?php echo Media::preview($name,$num); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>

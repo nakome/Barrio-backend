@@ -14,6 +14,11 @@
                 </div>
             </div>
             <div class="row">
+
+                <div class="alert alert-info">
+                    <b>Nota: </b> si el tamaño del backup es mayor del establecido en el Hosting  puede causar error al subir o bajar el archivo zip.
+                </div>
+
                 <?php 
                     $array = Backup::getAll();
                     if ($array) {

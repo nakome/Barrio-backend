@@ -59,10 +59,18 @@
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <input name="file" class="upload mb-5 p-3" type="file" required/>
                             <br/>
-                            <input class="btn btn-primary"  type="submit" name="uploadFile" value="Subir imagen">
+                            <input class="btn btn-primary"  type="submit" id="upload" name="uploadFile" value="Subir imagen">
                             <a class="btn btn-danger" href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>">Cancelar</a>
                         </form>
                         <?php echo $error;?>
+
+                        <script rel="javascript">
+                            document.querySelector('#upload').addEventListener('click', function(e){
+                                if(document.querySelector('.upload').value !== ''){
+                                    e.target.value = 'Subiendo espere...';
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

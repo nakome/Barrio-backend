@@ -1,0 +1,53 @@
+<?php
+    $image = str_replace(ROOTBASE,Url::web(),$file);
+    $info = File::info($file);
+
+    $folder = str_replace(ROOTBASE.'/content/','',$file);
+    $folder = str_replace('/'.File::name($file).'.'.File::ext($file),'',$folder);
+
+    Action::add('head',function(){
+        $style = '<link rel="stylesheet" href="'.Url::base().'/core/extensions/media/assets/style.css" />';
+        echo $style;
+
+    });
+    Action::add('footer',function(){
+        $javascript = '<script rel="javascript" src="'.Url::base().'/core/extensions/media/assets/script.js"></script>';
+        echo $javascript;
+    });
+?>
+
+<?php include PARTIALS.'/head.inc.html';?>
+<div id="page">
+    <?php include PARTIALS.'/nav.inc.html';?>
+    <main id="wrapper">
+        <?php include PARTIALS.'/header.inc.html';?>
+        <div id="content">
+            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
+                <a class="text-success" href="<?php echo Url::base();?>/extension/media">Media</a> - Editar
+            </div>
+            <div class="row">
+                    <div class="col-8">
+                        <div class="bg-white p-2">
+                            <?php echo Media::editPreview($name,$file,$image);?>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="b-bottom-dark text-dark"><i class="icon-info mr-2"></i> Informacion</div>
+                        <form method="post" class="list-unstyled bg-white p-2">
+                            <input type="hidden" name="token" value="<?php echo Token::generate();?>">
+                            <input type="text" name="name" value="<?php echo File::name($info['name']);?>">
+                            <input type="text" class="bg-light text-dark" disabled value="Fecha de subida: <?php echo $info['date'];?>">
+                            <input type="text" class="bg-light text-dark" disabled value="Tamaño: <?php echo $info['size'];?>">
+                            <input type="text" class="bg-light text-dark" disabled value="Permisos: <?php echo substr(sprintf('%o', $info['fileperms']), -4);?>">
+                            <input type="text" class="bg-light text-dark" disabled value="Carpeta: <?php echo $folder; ?>">
+    
+                            <input type="submit" name="borrar" onclick="return confirm('Estas seguro!')" class="btn btn-danger" value="Borrar archivo">
+                            <input type="submit" name="renombrar" class="btn btn-primary" value="Renombrar">
+                            <a class="btn btn-info" href="<?php echo Url::base();?>/extension/media">Volver</a>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </main>
+</div>
+<?php include PARTIALS.'/footer.inc.html';?>
