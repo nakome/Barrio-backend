@@ -12,8 +12,8 @@ class Backup
 {
     /**
      * Get all backups
-     * 
-     * @return array the array 
+     *
+     * @return array the array
      */
     public static function getAll()
     {
@@ -26,11 +26,11 @@ class Backup
 
     /**
      * Generate backup
-     * 
+     *
      * @return string
      */
     public static function generate()
-    {   
+    {
         $files = ROOTBASE.'/content/';
         $backupDir = ROOTBASE.'/backups/';
         if (!Dir::exists($backupDir)) {
@@ -50,9 +50,9 @@ class Backup
 
     /**
      * Delete backup
-     * 
+     *
      * @param string $file the file
-     * 
+     *
      * @return boolean
      */
     public static function delete($file = '')
@@ -70,7 +70,7 @@ class Backup
     }
 
     public static function download($file)
-    {   
+    {
         $file = base64_decode($file);
         $filename = File::name($file).'.zip';
         header('Content-Description: File Transfer');
@@ -88,27 +88,27 @@ class Backup
     }
     /**
      * Zip files
-     * 
+     *
      * @param string $source      the folder to zip
-     * @param string $destination the ouput file 
-     * 
+     * @param string $destination the ouput file
+     *
      * @return callback
      */
-    public static function zip($source = '', $destination = '') 
+    public static function zip($source = '', $destination = '')
     {
         if (extension_loaded('zip') === true) {
             if (file_exists($source) === true) {
                 $zip = new ZipArchive();
-    
+
                 if ($zip->open($destination, ZIPARCHIVE::CREATE) === true) {
                     $source = realpath($source);
-    
+
                     if (is_dir($source) === true) {
                         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
-    
+
                         foreach ($files as $file) {
                             $file = realpath($file);
-    
+
                             if (is_dir($file) === true) {
                                 $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
                             } else if (is_file($file) === true) {
@@ -127,9 +127,9 @@ class Backup
 
     /**
      * Unzip archives
-     * 
+     *
      * @param string $dir the dir
-     * 
+     *
      * @return boolean
      */
     public static function unZip($dir)
@@ -137,7 +137,7 @@ class Backup
         /**
          * Remove all directories
          */
-        function rmdirRecursive($dir) 
+        function rmdirRecursive($dir)
         {
             foreach (scandir($dir) as $file) {
                 if ('.' === $file || '..' === $file) continue;
@@ -146,27 +146,27 @@ class Backup
             }
             rmdir($dir);
         }
-        
+
         if ($_FILES["zip_file"]["name"]) {
             $filename = $_FILES["zip_file"]["name"];
             $source = $_FILES["zip_file"]["tmp_name"];
             $type = $_FILES["zip_file"]["type"];
-        
+
             $name = explode(".", $filename);
             $accepted_types = array('application/zip', 'application/x-zip-compressed', 'multipart/x-zip', 'application/x-compressed');
             foreach ($accepted_types as $mime_type) {
                 if ($mime_type == $type) {
                     $okay = true;
                     break;
-                } 
+                }
             }
-        
+
             $continue = strtolower($name[1]) == 'zip' ? true : false;
             if (!$continue) {
                 Message::set('El archivo que esta tratando de subir no es en formato zip');
                 Url::redirect(Url::base().'/extension/backup');
             }
-        
+
             /* PHP current path */
             $path = $dir;  // absolute path to the directory where zipper.php is in
             $filenoext = basename($filename, '.zip');  // absolute path to the directory where zipper.php is in (lowercase)
@@ -174,20 +174,20 @@ class Backup
 
             $targetdir = $path; // target directory
             $targetzip = $path . $filename; // target zip file
-        
+
             /* create directory if not exists', otherwise overwrite */
             /* target directory is same as filename without extension */
 
             if (is_dir($targetdir)) rmdirRecursive ( $targetdir);
 
             Dir::create($targetdir);
-        
+
             /* here it is really happening */
             if (move_uploaded_file($source, $targetzip)) {
                 $zip = new ZipArchive();
                 $x = $zip->open($targetzip);  // open the zip file to extract
                 if ($x === true) {
-                    $zip->extractTo($targetdir); // place in the directory with same name  
+                    $zip->extractTo($targetdir); // place in the directory with same name
                     $zip->close();
                     File::delete($targetzip);
                 }
@@ -198,12 +198,12 @@ class Backup
                 Admin::log('Backup descromprimido');
                 Message::set('El archivo ha sido descomprimido');
                 Url::redirect(Url::base().'/extension/backup');
-            } else {    
+            } else {
                 Admin::log('Backup no se ha podido descomprimir');
                 essage::set('El archivo no podido ser descomprimido, por favor vuelva a intentarlo');
                 Url::redirect(Url::base().'/extension/backup');
             }
         }
-        
+
     }
 }

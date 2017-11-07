@@ -9,17 +9,27 @@
             </div>
             <div class="row">
                 <div class="col-12 text-center">
+
+                    <?php
+                        $mfz = ini_get('upload_max_filesize') *1048576;
+                        $dirsize = Dir::size(ROOTBASE.'/content');
+                        if($dirsize > $mfz) {
+                            $html = '<div class="alert alert-danger" style="max-width:25em;margin:2em auto">
+                                <p><b>Nota: </b> el tamaño de la carpeta excede el de crear el backup, necesita hacerlo manualmente.</p>
+                            </div>';
+                            echo $html;
+                        }else{
+                    ?>
+
                     <a href="<?php echo Url::base();?>/extension/backup/create" class="btn btn-primary">Crear Backup</a>
                     <a href="<?php echo Url::base();?>/extension/backup/import" class="btn btn-warning">Importar Backup</a>
+
+                    <?php } ?>
                 </div>
             </div>
             <div class="row">
 
-                <div class="alert alert-info">
-                    <b>Nota: </b> si el tamaño del backup es mayor del establecido en el Hosting  puede causar error al subir o bajar el archivo zip.
-                </div>
-
-                <?php 
+                <?php
                     $array = Backup::getAll();
                     if ($array) {
                         $html = '<div class="card-group">';
