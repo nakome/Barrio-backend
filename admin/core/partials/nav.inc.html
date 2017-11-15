@@ -3,7 +3,6 @@
     <section>
         <ul class="navigation">
             <li><a href="<?php echo Url::base();?>" class="link" >Dashboard</a>
-            <li><a target="_blank" class="link" href="<?php echo Url::web();?>/docs">Documentaíon</a></li>
         </ul>
 
         <div id="extensiones" class="accordion m-0">
@@ -12,7 +11,7 @@
             </div>
             <div class="accordion-content bg-dark text-white hide">
                <ul class="list-unstyled">
-                <?php  Admin::loadExtensions(); ?>
+                <?php Admin::loadExtensions(); ?>
                </ul>
             </div>
         </div>

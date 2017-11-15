@@ -80,8 +80,8 @@
                                 </a>
                             </small>
                         </div>
-                        <ul class="list-unstyled" style="height:10em;overflow-x:auto;"> 
-                            <?php 
+                        <ul class="list-unstyled" style="height:10em;overflow-x:auto;">
+                            <?php
                                 $data = Admin::getLog();
                                 foreach($data as $item){
                                     echo '<li><small><b  class="text-danger">'.$item['date'].': </b> <em>'.$item['desc'].'</em></small></li>';
@@ -129,6 +129,8 @@
                             <li><b>Content: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/content')), -4); ?></li>
                             <li><b>Extensions: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/extensions')), -4); ?></li>
                             <li><b>Themes: </b> <?php echo substr(sprintf('%o', fileperms(ROOTBASE.'/themes')), -4); ?></li>
+                            <li><b>Upload: </b> <?php echo ini_get('upload_max_filesize'); ?></li>
+                            <li><b>Post: </b> <?php echo ini_get('post_max_size'); ?></li>
                         </ul>
                     </div>
                 </div>

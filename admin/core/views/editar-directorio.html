@@ -1,13 +1,12 @@
 <?php
     Admin::saveFile(ROOTBASE.'/content/'.$name.'/index.md',$name,'directorio');
-    $directorio = explode('/',$name);
-    $directorio = base64_encode($directorio[0]);
+    $directorio = base64_encode($name);
 
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor-dist.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor-dist.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor.js"></script>';
     });
 ?>
 
@@ -57,19 +56,31 @@
                         <div class="card-body p-2 dashboard-section">
                             <ul class="list-unstyled m-0" style="height:15em;overflow-x:auto;">
                                 <?php
-                                    $directorio = ROOTBASE.'/content/'.$name;
+                                    $dir = Dir::scan(ROOTBASE.'/content/'.$name);
+                                    foreach($dir as $item){
+                                        if($item == 'imagenes') continue;
+                                        echo '<li>
+                                                <a  class="text-dark text-deco-none"
+                                                    href="'.Url::base().'/editar/directorio/'.base64_encode($name.'/'.File::name($item)).'">
+                                                    <b>'.$item.': </b> <span class="pull-right text-danger">'.(count(File::scan(ROOTBASE.'/content/'.$name.'/'.$item)) - 1).'</span>
+                                                </a>
+                                            </li>';
+                                    }
+                                    $directorio = ROOTBASE.'/content/'.$name.'/';
                                     $files = array_diff(scandir($directorio), array('..', '.'));
                                     foreach($files as $file){
-                                        if(is_dir(ROOTBASE.'/content/'.$file)) continue;
-                                        if($file == 'index.md') continue;
-
-                                        echo '<li class="p-2">
-                                                <a  class="text-dark text-deco-none" href="'.Url::base().'/editar/archivo/'.base64_encode($name.'/'.File::name($file)).'">
-                                                    <i class="icon-file-text2 mr-2"></i>'.$file.'
+                                        if(is_dir(ROOTBASE.'/content/'.$name.'/'.$file)){
+                                            continue;
+                                        }
+                                        echo '<li>
+                                                <a  class="text-dark text-deco-none"
+                                                    href="'.Url::base().'/editar/archivo/'.base64_encode($name.'/'.File::name($file)).'">
+                                                    '.$file.'
                                                 </a>
                                             </li>';
                                     }
                                 ?>
+
                             </ul>
                         </div>
                     </div>
@@ -188,7 +199,10 @@
                                         <a href="#image">Img</a>
                                         <span class="editor-divider"></span>
                                         <select name="shortcodes" id="shortcodes">
-                                            <option value=""> --- </option>
+                                            <option value="">Shortcodes</option>
+                                            <option value="texto">{Texto}</option>
+                                            <option value="barra">{Barra}</option>
+                                            <option value="iframe">{Iframe}</option>
                                             <option value="bloques">{Bloques}</option>
                                             <option value="bloque">{Bloque}</option>
                                             <option value="servicio">{Servicio}</option>
@@ -197,18 +211,19 @@
                                             <option value="btn">{Btn}</option>
                                             <option value="icono">{Icono}</option>
                                             <option value="youtube">{Youtube}</option>
+                                            <option value="vimeo">{Vimeo}</option>
                                         </select>
-                                        <span class="editor-divider"></span>  
-                                            
+                                        <span class="editor-divider"></span>
+
                                         <a href="#" id="btnExpand" class="text-deco-none text-dark">
                                             <i class="icon-resize-full-screen"></i>
                                         </a>
                                     </div>
                                     <textarea name="content" class="editor-area" id="editor-area" rows="10"><?php echo $content;?></textarea>
                                     <div class="row">
-                                        <div class="col-12">
-                                            <input class="btn btn-primary mt-3" type="submit" name="guardar" value="Guardar">
-                                            <a href="<?php echo Url::base();?>" class="btn btn-danger mt-3">Cancelar</a>
+                                        <div class="col-12  mt-1">
+                                            <input class="btn btn-primary" type="submit" name="guardar" value="Guardar">
+                                            <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
                                         </div>
                                     </div>
                                 </div>

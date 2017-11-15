@@ -1,10 +1,10 @@
 <?php Admin::saveFile(ROOTBASE.'/content/'.$name.'.md',$name,'archivo'); ?>
 <?php
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor-dist.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor-dist.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor.js"></script>';
     });
 ?>
 
@@ -136,7 +136,7 @@
                             </div>
                             <div class="col-4">
                                 <?php if($name != '404'){ ?>
-                                <label for="published">Publicado <small class="text-dark"><?php echo $header['published'];?></small></label>
+                                <label for="published">Publicado <small class="text-dark"><?php echo ($header['published'] == 'true') ? 'Si' : 'No';?></small></label>
                                 <select name="published">
                                     <option value="<?php echo $header['published'];?>"> --- </option>
                                     <option value="si">Si</option>
@@ -201,9 +201,12 @@
                                         <a href="#link">link</a>
                                         <a href="#image">Img</a>
                                         <span class="editor-divider"></span>
-                                        
+
                                         <select name="shortcodes" id="shortcodes">
-                                            <option value=""> --- </option>
+                                            <option value="">Shortcodes</option>
+                                            <option value="texto">{Texto}</option>
+                                            <option value="barra">{Barra}</option>
+                                            <option value="iframe">{Iframe}</option>
                                             <option value="bloques">{Bloques}</option>
                                             <option value="bloque">{Bloque}</option>
                                             <option value="servicio">{Servicio}</option>
@@ -212,19 +215,20 @@
                                             <option value="btn">{Btn}</option>
                                             <option value="icono">{Icono}</option>
                                             <option value="youtube">{Youtube}</option>
+                                            <option value="vimeo">{Vimeo}</option>
                                         </select>
 
-                                        <span class="editor-divider"></span>  
-                                         
+                                        <span class="editor-divider"></span>
+
                                         <a href="#" id="btnExpand" class="text-deco-none text-dark">
                                             <i class="icon-resize-full-screen"></i>
                                         </a>
                                     </div>
                                     <textarea name="content" class="editor-area" id="editor-area" rows="10"><?php echo $content;?></textarea>
                                     <div class="row">
-                                        <div class="col-12">
-                                            <input class="btn btn-primary mt-3" type="submit" name="guardar" value="Guardar">
-                                            <a href="<?php echo Url::base();?>" class="btn btn-danger mt-3">Cancelar</a>
+                                        <div class="col-12  mt-2">
+                                            <input class="btn btn-primary" type="submit" name="guardar" value="Guardar">
+                                            <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
                                         </div>
                                     </div>
                                 </div>

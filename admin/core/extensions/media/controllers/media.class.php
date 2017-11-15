@@ -13,21 +13,21 @@ class Media
 
     /**
      * Format bytes
-     * 
+     *
      * @param number $bytes      the bytes
      * @param number $precission the precission
-     * 
+     *
      * @return number
      */
-    public static function format($bytes, $precision = 2) { 
+    public static function format($bytes, $precision = 2) {
         $base = log($bytes, 1024);
-        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');   
+        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
         return round(pow(1024, $base - floor($base)), $precision) .' '. $suffixes[floor($base)];
-    } 
+    }
 
     /**
      * Upload files
-     * 
+     *
      * @return string
      */
     public static function upload()
@@ -37,20 +37,23 @@ class Media
                 $files = $_FILES['file']['name'];
                 // create if not exists
                 $dir =  ROOTBASE.'/content/imagenes/media/';
-                if (!Dir::exists($dir)) {
-                    Dir::create($dir, 0777);
-                }
-    
+
                 // max storage file
                 $file_size = $_FILES['file']['size'];
-                if (($file_size > 10485760)) {      
-                    Message::set('Error!','Archivo muy largo maximo 10mb');
+                $maxFileUpload = ini_get('upload_max_filesize');
+                $mfz = $maxFileUpload*1000000;
+                if ($file_size > $mfz) {
+                    Message::set('Error!','Archivo muy largo maximo '.$maxFileUpload);
                     Url::redirect(Url::base().'/extension/media/new/file');
                     exit;
                 }
-    
+
+                if (!Dir::exists($dir)) {
+                    Dir::create($dir, 0777);
+                }
+
                 $fileUploaded = $dir.Url::parse(File::name($_FILES['file']['name'])).'.'.File::ext($_FILES['file']['name']);
-    
+
                 $filetypes = array(
                     'jpg','jpeg','png','gif','svg',
                     'webm','mp4','ogg','mov','wav',
@@ -67,6 +70,7 @@ class Media
                     Message::set('Error!','El archivo ya existe');
                     Url::redirect(Url::base().'/extension/media/new/file');
                 } else {
+
                     if (move_uploaded_file($_FILES['file']['tmp_name'], $fileUploaded)) {
                         Message::set('Bien!','El archivo ha sido subido');
                         Url::redirect(Url::base().'/extension/media/');
@@ -78,15 +82,15 @@ class Media
                 die('crsf Detect !');
             }
         }
-    
+
     }
 
     /**
      * Archive preview
-     * 
+     *
      * @param string $name the type of file
      * @param string $num  num of page
-     * 
+     *
      * @return string
      */
     public static function preview($name = 'images',$num = 0)
@@ -104,7 +108,7 @@ class Media
         if (!Dir::exists($dir)) {
             Dir::create($dir, 0777);
         }
-    
+
         $files = '';
         switch($name){
         case 'images':
@@ -115,7 +119,7 @@ class Media
             break;
         case 'music':
             $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesMusic);
-            break; 
+            break;
         case 'documents':
             $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesDocs);
             break;
@@ -145,7 +149,7 @@ class Media
 
 
             $html = '';
-        
+
 
             foreach ($items as $file) {
 
@@ -208,14 +212,14 @@ class Media
 
     /**
      * Preview for preview image
-     * 
+     *
      * @param string $name  the name
      * @param string $file  the file
      * @param string $image the image
      */
     public static function editPreview($name= '',$file = '',$image = '')
     {
-        if (Url::post('borrar')){ 
+        if (Url::post('borrar')){
             if (Token::check(Url::post('token'))) {
                 File::delete($file);
                 if (!Dir::exists($file)) {

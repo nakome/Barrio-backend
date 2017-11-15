@@ -12,11 +12,11 @@
             $dir = ROOTBASE.'/content';
             if(File::rename($dir.'/'.$name.'.md',$dir.'/'.$dirExist.Url::parse(Url::post('url')).'.md')){
                 Message::set('Bien !','El archivo ha sido renombrado');
-                Url::redirect(Url::base().'/editar/archivo/'.base64_encode(Url::parse(Url::post('url'))));
+                Url::redirect(Url::base().'/editar/archivo/'.base64_encode($directorio.'/'.Url::parse(Url::post('url'))));
                 exit;
             }else{
                 Message::set('Error !','El archivo no ha sido renombrado');
-                Url::redirect(Url::base().'/cambiar/url/'.base64_encode(File::name($name)));
+                Url::redirect(Url::base().'/cambiar/url/'.base64_encode($directorio.'/'.File::name($name)));
                 exit;
             }
         }else{

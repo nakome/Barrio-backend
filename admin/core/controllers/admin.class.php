@@ -256,7 +256,7 @@ class Admin
                 $title = (Url::post('title')) ? Url::post('title') : '';
                 $keywords = (Url::post('keywords')) ? Url::post('keywords') : '';
                 $template = (Url::post('template')) ? Url::post('template') : 'index';
-                $published = (Url::post('published')) ? Url::post('published') : si;
+                $published = (Url::post('published') == 'si') ? 'true' : 'false';
                 $author = (Url::post('author')) ? Url::post('author') : '';
                 $date = (Url::post('date')) ? Url::post('date') : date('d/m/Y');
                 $robots = (Url::post('robots')) ? Url::post('robots') : 'index,follow';

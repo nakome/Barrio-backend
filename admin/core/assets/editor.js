@@ -28,8 +28,20 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
      editor = new Editor(myTextArea),
      controls = {
 
+        'barra': function(){
+            editor.wrap("{Barra  size='", "' color='primary'}");
+        },
+        'texto': function(){
+            editor.wrap(" {Texto bg='blue' color='white'}", '\n{/Texto}');
+        },
+        'iframe': function(){
+            editor.wrap("{Iframe src='link sin https://", "'}");
+        },
         'youtube': function(){
-            editor.wrap('{Youtube id="id_de_youtube', '"}');
+            editor.wrap("{Youtube id='id_de_youtube", "'}");
+        },
+        'vimeo': function(){
+            editor.wrap("{Vimeo id='id_de_vimeo", "'}");
         },
         'bloques': function(){
             editor.wrap('{Bloques}', '\n{/Bloques}');
@@ -53,11 +65,9 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
             editor.wrap("{Icono type='","mobile'}");
         },
 
-        
 
 
-        
-        
+
 
         'bold': function bold() {
             editor.wrap('**', '**');
@@ -120,14 +130,14 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
             var placeholder = 'Title of link';
             fakePrompt('Titulo:', 'Titulo del link', false, function (t) {
                 title = t;
-                fakePrompt('URL:', '{url}', true, function (link) {
+                fakePrompt('URL:', '', true, function (link) {
                     url = link;
                     editor.insert('\n[' + title + '](' + link + ')\n');
                 });
             });
         },
         'image': function image() {
-            fakePrompt('Image URL:', '{url}', true, function (r) {
+            fakePrompt('Image URL:', '', true, function (r) {
                 var altText = r.substring(r.lastIndexOf('}') + 1, r.lastIndexOf('.')).replace(/[\-\_\+]+/g, " ").capitalize();
                 altText = !altText.includes('}') ? decodeURIComponent(altText) : 'Image';
                 editor.insert('\n![' + altText + '](' + r + ')\n');
@@ -147,11 +157,12 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
             editor.insert('\n\n---\n\n');
         }
     };
-
-    document.querySelector('#shortcodes').addEventListener('change',function(){
+    var shortcodes =document.querySelector('#shortcodes');
+    shortcodes.addEventListener('change',function(){
         var hash = this.value;
         if (controls[hash]) {
             controls[hash]();
+            shortcodes.selectedIndex = 0;
         }
     });
 
@@ -237,7 +248,7 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
         }, false);
 
         var buttonOK = document.createElement('button');
-        buttonOK.innerHTML = 'OK';
+        buttonOK.innerHTML = 'Ok';
         buttonOK.addEventListener('click', function () {
             if (isRequired) {
                 if (input.value !== "" && input.value !== value) {
@@ -262,7 +273,7 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
     }
 
 
-    // full size 
+    // full size
     var area = document.querySelector('#texto'),
     botonExpand = document.querySelector('#btnExpand');
     if(area){

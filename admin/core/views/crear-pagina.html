@@ -5,7 +5,6 @@
     $directorio = rtrim($directorio, '/');
 
     $dirExist = ($directorio) ? $directorio.'/' : '';
-
     if(Url::post('crear')){
         if(Token::check(Url::post('token'))){
             $date = date('d/m/Y');
