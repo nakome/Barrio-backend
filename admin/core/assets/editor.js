@@ -28,11 +28,11 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
      editor = new Editor(myTextArea),
      controls = {
 
-        'barra': function(){
-            editor.wrap("{Barra  size='", "' color='primary'}");
+        'progressBar': function(){
+            editor.wrap("{ProgressBar  size='", "' color='primary'}");
         },
-        'texto': function(){
-            editor.wrap(" {Texto bg='blue' color='white'}", '\n{/Texto}');
+        'text': function(){
+            editor.wrap(" {Text bg='blue' color='white'}", '\n{/Text}');
         },
         'iframe': function(){
             editor.wrap("{Iframe src='link sin https://", "'}");
@@ -41,16 +41,16 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
             editor.wrap("{Youtube id='id_de_youtube", "'}");
         },
         'vimeo': function(){
-            editor.wrap("{Vimeo id='id_de_vimeo", "'}");
+            editor.wrap("{Vimeo id='id_de_youtube", "'}");
         },
-        'bloques': function(){
-            editor.wrap('{Bloques}', '\n{/Bloques}');
+        'blocks': function(){
+            editor.wrap('{Blocks}', '\n{/Blocks}');
         },
-        'bloque': function(){
-            editor.wrap("{Bloque col='4'}", '\n{/Bloque}');
+        'block': function(){
+            editor.wrap("{Block col='4'}", '\n{/Block}');
         },
-        'servicio': function(){
-            editor.wrap("{Servicio icon='heart'clase='mb-5'}", '\n{/Servicio}');
+        'service': function(){
+            editor.wrap("{Service icon='heart'cls='mb-5'}", '\n{/Service}');
         },
         'card': function(){
             editor.wrap("{Card col='4' title='heart' img='image_aqui'}", '\n{/Card}');
@@ -61,8 +61,8 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
         'btn': function(){
             editor.wrap("{Btn color='link' text='Link' link='","'}");
         },
-        'icono': function(){
-            editor.wrap("{Icono type='","mobile'}");
+        'icon': function(){
+            editor.wrap("{Icon type='","mobile'}");
         },
 
 

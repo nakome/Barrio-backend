@@ -13,7 +13,7 @@ define('COMPONENTS', CONTROLLERS.'/components');
 define('PARTIALS', ROOT.'/core/partials');
 define('VIEWS', ROOT.'/core/views');
 define('ROOTBASE', rtrim(str_replace(array('admin'), array(''), dirname(__FILE__)), '\\/'));
-define('DEV', true);
+define('DEV', false);
 if (DEV) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
