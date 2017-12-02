@@ -10,11 +10,6 @@
 ![Ver Imagen](backend-ver-imagen.png)
 
 
-### Shortcodes
-
-![Escribiendo shortcodes](Shortcodes.gif)
-
-
 ### Instalación
 
 
