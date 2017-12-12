@@ -3,8 +3,6 @@
      * Configuration
      */
     return array(
-        // for now only spanish
-        // you can go to components lang and create new language
         'lang' => 'es',
         // charset
         'charset' => 'UTF-8',

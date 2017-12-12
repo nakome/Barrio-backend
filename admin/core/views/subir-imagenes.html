@@ -14,8 +14,8 @@
             Dir::create(ROOTBASE.'/content/imagenes/'.$name);
         }
         $file_size = $_FILES['file']['size'];
-        if (($file_size > 3097152)){      
-            $message = 'Archivo muy largo maximo 3mb puedes optimizarla en http://optimizilla.com/'; 
+        if (($file_size > 3097152)){
+            $message = L::ilog_imagetoolarge.' https://compressor.io';
             die($message);
             exit;
         }
@@ -23,17 +23,14 @@
         $fileUploaded = ROOTBASE.'/content/imagenes/'.$name.'/'.Url::parse(File::name($_FILES['file']['name'])).'.'.File::ext($_FILES['file']['name']);
 
         if(File::exists($fileUploaded)){
-            $error = '<span class="bg-danger text-white p-3">Error el archivo ya existe</span>';
+            $error = '<span class="bg-danger text-white p-3">'.L::ilog_fileexists.'</span>';
         }else{
             if(!in_array(File::ext($_FILES['file']['name']), $AllowedExtensions)) {
-              die('Error no se permite esta extension');
+              die(L::ilog_errextension);
             }
 
-
-
-
             if(move_uploaded_file($_FILES['file']['tmp_name'], $fileUploaded)) {
-              Message::set('Bien!','El archivo ha sido subido');
+              Message::set(L::success,L::ilog_fileupload);
               Url::redirect(Url::base().'/editar/archivo/'.base64_encode($name));
             }
         }
@@ -49,25 +46,25 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <strong>Seccion: </strong>Subir Archivos
+                <strong><?php echo L::section;?>: </strong><?php echo L::uploadfiles;?>
             </div>
             <div class="row">
                 <div class="col-6">
                     <div class="bg-white b-light p-5">
-                        <h5 class="b-bottom-danger text-danger m-1 mb-5">Subir imagen en <?php echo $name;?> </h5>
+                        <h5 class="b-bottom-danger text-danger m-1 mb-5"><?php echo L::ilog_uploadfileson;?>  <?php echo $name;?> </h5>
                         <form method="post" action="" enctype="multipart/form-data">
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <input name="file" class="upload mb-5 p-3" type="file" required/>
                             <br/>
-                            <input class="btn btn-primary"  type="submit" id="upload" name="uploadFile" value="Subir imagen">
-                            <a class="btn btn-danger" href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>">Cancelar</a>
+                            <input class="btn btn-primary"  type="submit" id="upload" name="uploadFile" value="<?php echo L::uploadfiles;?>">
+                            <a class="btn btn-danger" href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>"><?php echo L::cancel;?></a>
                         </form>
                         <?php echo $error;?>
 
                         <script rel="javascript">
                             document.querySelector('#upload').addEventListener('click', function(e){
                                 if(document.querySelector('.upload').value !== ''){
-                                    e.target.value = 'Subiendo espere...';
+                                    e.target.value = '<?php echo L::uploadwait;?>....';
                                 }
                             });
                         </script>

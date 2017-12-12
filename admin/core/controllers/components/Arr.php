@@ -1,4 +1,4 @@
-<?php
+<?php defined('ACCESS') or die('Sin accesso a este script.');
 
 /**
  * @author      Moncho Varela / Nakome <nakome@gmail.com>

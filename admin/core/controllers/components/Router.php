@@ -1,4 +1,4 @@
-<?php
+<?php defined('ACCESS') or die('Sin accesso a este script.');
 
 /**
  * Functions to make routes.
@@ -30,6 +30,12 @@
  */
 class Router
 {
+
+    // constats
+    const APPNAME = 'Router';
+    const VERSION = '0.0.1';
+
+
     private $routes = array();
     public static $config = array();
 
@@ -102,12 +108,21 @@ class Router
         self::loadComponent('Message');
         self::loadComponent('Image');
         self::loadComponent('Url');
+        self::loadComponent('I18n');
         // Turn on output buffering
         ob_start();
         // Sanitize url
         Url::runSanitize();
         // load config
         $this->loadConfig();
+
+        //  i18n config
+        $lang = static::$config['lang'];
+        $langFile = COMPONENTS."/lang/lang_$lang.ini";
+        $langCache = COMPONENTS."/langcache/";
+        $i18n = new i18n($langFile, $langCache, $lang);
+        $i18n->init();
+
         // zona horaria por defecto
         date_default_timezone_set(static::$config['timezone']);
         // Send default header and set internal encoding

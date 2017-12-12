@@ -20,23 +20,23 @@
     <?php include PARTIALS.'/header.inc.html';?>
     <div id="content">
         <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-            <a class="text-success" href="<?php echo Url::base();?>/extension/media">Media</a> - Subir archivo
+            <a class="text-success" href="<?php echo Url::base();?>/extension/media">Media</a> - <?php echo L::uploadfiles;?>
         </div>
         <div class="row">
             <div class="col-6">
                 <div class="bg-white b-light p-5">
-                    <h5 class="b-bottom-danger text-danger m-1 mb-5">Subir archivo en Media </h5>
+                    <h5 class="b-bottom-danger text-danger m-1 mb-5"><?php echo L::uploadfiles;?></h5>
                     <form method="post" action="" enctype="multipart/form-data">
                         <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                         <input name="file" class="upload mb-5 p-3" type="file" required/>
                         <br/>
-                        <input class="btn btn-primary"  type="submit" name="uploadFile" id="upload" value="Subir archivo">
-                        <a class="btn btn-danger" href="<?php echo Url::base();?>/extension/media">Cancelar</a>
+                        <input class="btn btn-primary"  type="submit" name="uploadFile" id="upload" value="<?php echo L::uploadfiles;?>">
+                        <a class="btn btn-danger" href="<?php echo Url::base();?>/extension/media"><?php echo L::cancel;?></a>
                     </form>
                     <script rel="javascript">
                         document.querySelector('#upload').addEventListener('click', function(e){
                             if(document.querySelector('.upload').value !== ''){
-                                e.target.value = 'Subiendo espere...';
+                                e.target.value = '<?php echo L::ilog_uploadfileson;?>...';
                             }
                         });
                     </script>

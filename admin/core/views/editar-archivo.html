@@ -16,33 +16,33 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content" class="mb-5">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <strong>Seccion: </strong> Editar - <?php echo ucfirst($name);?>
+                <strong><?php echo L::section;?>: </strong> <?php echo L::edit;?> - <?php echo ucfirst($name);?>
             </div>
 
             <div class="row">
                 <div class="col-4">
                     <div class="card dashboard mb-4 b-top-dark bg-white text-dark">
-                        <div class="card-title p-3 b-bottom-dark text-dark">Ajustes Pagina</div>
+                        <div class="card-title p-3 b-bottom-dark text-dark"><?php echo L::settings;?></div>
                         <div class="card-body p-2">
                             <ul class="list-unstyled">
                                 <li class="p-2">
                                     <?php $link = ($name != 'index') ? $name : ''; ?>
                                     <a class="text-dark text-deco-none" target="_blank" href="<?php echo Url::web().'/'.$link;?>">
                                         <i class="icon-eye mr-2"></i>
-                                        Ver Pagina
+                                        <?php echo L::viewpage;?>
                                     </a>
                                 </li>
                                 <?php if($name != 'index' && $name != '404'){ ?>
                                 <li class="p-2">
                                     <a class="text-dark text-deco-none" href="<?php echo Url::base().'/cambiar/url/'.base64_encode($name);?>">
                                         <i class="icon-link mr-2"></i>
-                                        Cambiar url
+                                        <?php echo L::changeurl;?>
                                     </a>
                                 </li>
                                 <li class="p-2">
-                                    <a class="text-dark text-deco-none" onclick="return confirm('Esta seguro de borrarlo!');" href="<?php echo Url::base().'/borrar/archivo/'.base64_encode($name);?>">
+                                    <a class="text-dark text-deco-none" onclick="return confirm(L::suretoclear);" href="<?php echo Url::base().'/borrar/archivo/'.base64_encode($name);?>">
                                         <i class="icon-trash mr-2"></i>
-                                        Borrar Pagina
+                                        <?php echo L::deletepage;?>
                                     </a>
                                 </li>
                                 <?php } ?>
@@ -51,12 +51,14 @@
                     </div>
                     <?php if($name != '404'){ ?>
                     <div class="card dashboard mb-4 b-top-dark bg-white text-dark">
-                        <div class="card-title p-3 b-bottom-dark text-dark">Archivos
+                        <div class="card-title p-3 b-bottom-dark text-dark">
+                            <?php echo L::files;?>
                             <span class="pull-right">
                                 <nav>
                                      <a  class="text-dark text-deco-none"
                                         href="<?php echo Url::base();?>/subir/imagen/<?php echo base64_encode($name);?>">
-                                        <i class="icon-circle-with-plus mr-2"></i> Añadir
+                                        <i class="icon-circle-with-plus mr-2"></i>
+                                        <?php echo L::add;?>
                                     </a>
                                 </nav>
                             </span>
@@ -84,7 +86,9 @@
                     <?php } ?>
 
                     <div class="card dashboard mb-4 b-top-dark bg-white text-dark mt-4">
-                        <div class="card-title p-3 b-bottom-dark text-dark">Informacíon</div>
+                        <div class="card-title p-3 b-bottom-dark text-dark">
+                            <?php echo L::info;?>
+                        </div>
                         <div class="card-body p-2">
                             <ul class="list-unstyled">
                             <?php
@@ -93,13 +97,13 @@
                                 $info = Admin::getPageInfo($folder,$file);
                                 $html = '';
                                 foreach($info as $item){
-                                    $html .= '<li class="p-1 text-danger"><small><b class="mr-2 text-dark">Nombre: </b>'.$item['name'].'</small></li>';
-                                    $html .= '<li class="p-1"><small><b class="mr-2">Ultima Actualizacíon: </b>'.$item['last_update'].'</small></li>';
+                                    $html .= '<li class="p-1 text-danger"><small><b class="mr-2 text-dark">'.L::name.': </b>'.$item['name'].'</small></li>';
+                                    $html .= '<li class="p-1"><small><b class="mr-2">'.L::lastupdate.': </b>'.$item['last_update'].'</small></li>';
 
-                                    $html .= '<li class="p-1"><small><b class="mr-2">Ultimo Cambio: </b>'.$item['last_change'].'</small></li>';
-                                    $html .= '<li class="p-1"><small><b class="mr-2">Ultimo Acceso: </b>'.$item['last_access'].'</small></li>';
-                                    $html .= '<li class="p-1"><small><b class="mr-2">Tamaño: </b>'.$item['filesize'].'</small></li>';
-                                    $html .= '<li class="p-1"><small><b class="mr-2">Permisos: </b>'.$item['fileperms'].'</small></li>';
+                                    $html .= '<li class="p-1"><small><b class="mr-2">'.L::lastchange.': </b>'.$item['last_change'].'</small></li>';
+                                    $html .= '<li class="p-1"><small><b class="mr-2">'.L::lastaccess.': </b>'.$item['last_access'].'</small></li>';
+                                    $html .= '<li class="p-1"><small><b class="mr-2">'.L::size.': </b>'.$item['filesize'].'</small></li>';
+                                    $html .= '<li class="p-1"><small><b class="mr-2">'.L::permisions.': </b>'.$item['fileperms'].'</small></li>';
                                 }
                                 echo $html;
                             ?>
@@ -119,33 +123,33 @@
 
                         <div class="row">
                             <div class="col-6">
-                                <label for="title">Titulo</label>
+                                <label for="title"><?php echo L::title;?></label>
                                 <input type="text" name="title" value="<?php echo $header['title'];?>" required>
                             </div>
                             <?php if($name != '404'){ ?>
                             <div class="col-6">
-                                <label for="image">Imagen</label>
+                                <label for="image"><?php echo L::image;?></label>
                                 <input type="text" name="image" placeholder="Link de la imagen" value="<?php echo $header['image'];?>">
                             </div>
                             <?php } ?>
                         </div>
                         <div class="row">
                             <div class="col-4">
-                                <label for="template">Plantilla</label>
+                                <label for="template"><?php echo L::template;?></label>
                                 <input type="text" name="template" placeholder="index" value="<?php echo $header['template'];?>" required>
                             </div>
                             <div class="col-4">
                                 <?php if($name != '404'){ ?>
-                                <label for="published">Publicado <small class="text-dark"><?php echo ($header['published'] == 'true') ? 'Si' : 'No';?></small></label>
+                                <label for="published"><?php echo L::published;?> <small class="text-dark"><?php echo ($header['published'] == 'true') ? L::checkyes : L::checkyes;?></small></label>
                                 <select name="published">
-                                    <option value="si">Si</option>
-                                    <option value="no">No</option>
+                                    <option value="si"><?php echo L::checkyes;?></option>
+                                    <option value="no"><?php echo L::checkyes;?></option>
                                 </select>
                                 <?php } ?>
                             </div>
                             <?php if($name != '404'){ ?>
                             <div class="col-4">
-                                <label for="keywords">Palabras clave</label>
+                                <label for="keywords"><?php echo L::keywords;?></label>
                                 <input type="text" name="keywords" placeholder="Palabras clave" value="<?php echo $header['keywords'];?>">
                             </div>
                             <?php } ?>
@@ -153,15 +157,15 @@
                         <?php if($name != '404'){ ?>
                         <div class="row">
                             <div class="col-4">
-                                <label for="author">Author</label>
+                                <label for="author"><?php echo L::author;?></label>
                                 <input type="text" name="author" placeholder="Autor de la pagina" value="<?php echo $header['author'];?>">
                             </div>
                             <div class="col-4">
-                                <label for="date">Date</label>
+                                <label for="date"><?php echo L::date;?></label>
                                 <input type="text" name="date" placeholder="<?php echo Date('d/m/Y');?>" value="<?php echo $header['date'];?>">
                             </div>
                             <div class="col-4">
-                                <label for="robots">Robots <small class="text-dark"><?php echo $header['robots'];?></small></label>
+                                <label for="robots"><?php echo L::robots;?> <small class="text-dark"><?php echo $header['robots'];?></small></label>
                                 <select name="robots">
                                     <option value="<?php echo $header['robots'];?>"> --- </option>
                                     <option value="noindex,nofollow">Noindex,Nofollow</option>
@@ -174,14 +178,14 @@
                         <?php } ?>
                         <div class="row">
                             <div class="col-12">
-                                <label for="description">Descripcion</label>
+                                <label for="description"><?php echo L::description;?></label>
                                 <textarea name="description" rows="1" required><?php echo $header['description'];?></textarea>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12"  id="texto">
                                 <label for="content">
-                                    Contenido
+                                    <?php echo L::content;?>
                                 </label>
                                 <div class="editor">
                                     <div class="editor-control" id="editor-control">
@@ -226,8 +230,8 @@
                                     <textarea name="content" class="editor-area" id="editor-area" rows="10"><?php echo $content;?></textarea>
                                     <div class="row">
                                         <div class="col-12  mt-2">
-                                            <input class="btn btn-primary" type="submit" name="guardar" value="Guardar">
-                                            <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
+                                            <input class="btn btn-primary" type="submit" name="guardar" value="<?php echo L::save;?>">
+                                            <a href="<?php echo Url::base();?>" class="btn btn-danger"><?php echo L::cancel;?></a>
                                         </div>
                                     </div>
                                 </div>

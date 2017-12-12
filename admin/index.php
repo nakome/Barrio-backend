@@ -3,8 +3,10 @@
 if (version_compare(PHP_VERSION, "5.3.0", "<")) {
     exit("Panel requires PHP 5.3.0 or greater.");
 }
+
 // Root directory
 define('ROOT', rtrim(dirname(__FILE__), '\\/'));
+define('ACCESS', true);
 define('BARRIO_ACCESS', true);
 define('CORE', ROOT.'/core');
 define('CONTROLLERS', ROOT.'/core/controllers');
@@ -13,7 +15,7 @@ define('COMPONENTS', CONTROLLERS.'/components');
 define('PARTIALS', ROOT.'/core/partials');
 define('VIEWS', ROOT.'/core/views');
 define('ROOTBASE', rtrim(str_replace(array('admin'), array(''), dirname(__FILE__)), '\\/'));
-define('DEV', false);
+define('DEV', true);
 if (DEV) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);

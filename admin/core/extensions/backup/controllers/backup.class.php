@@ -2,6 +2,9 @@
 
 defined('BARRIO_ACCESS') or die('No direct script access.');
 
+
+
+
 /**
  * @author      Moncho Varela / Nakome <nakome@gmail.com>
  * @copyright   2016 Moncho Varela / Nakome <nakome@gmail.com>
@@ -10,6 +13,26 @@ defined('BARRIO_ACCESS') or die('No direct script access.');
  */
 class Backup
 {
+
+    /**
+     * Language function
+     *
+     * @param string $name the name
+     */
+    public static $lang;
+    public static function lang($name = 'es')
+    {
+        $file = EXTENSIONS.'/backup/lang.php';
+        if (file_exists($file) && is_file($file)) {
+             static::$lang = (include $file);
+             return static::$lang[$name];
+        } else {
+            die('Oops.. Donde esta el archivo de configuración ?!');
+        }
+    }
+
+
+
     /**
      * Get all backups
      *

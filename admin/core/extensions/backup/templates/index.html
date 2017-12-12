@@ -5,7 +5,7 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                Backup
+                <?php echo $lang['backup'];?>
             </div>
             <div class="row">
                 <div class="col-12 text-center">
@@ -15,14 +15,14 @@
                         $dirsize = Dir::size(ROOTBASE.'/content');
                         if($dirsize > $mfz) {
                             $html = '<div class="alert alert-danger" style="max-width:25em;margin:2em auto">
-                                <p><b>Nota: </b> el tamaño de la carpeta excede el de crear el backup, necesita hacerlo manualmente.</p>
+                                <p><b>'.$lang['note'].': </b> '.$lang['bigsizeinfo'].'</p>
                             </div>';
                             echo $html;
                         }else{
                     ?>
 
-                    <a href="<?php echo Url::base();?>/extension/backup/create" class="btn btn-primary">Crear Backup</a>
-                    <a href="<?php echo Url::base();?>/extension/backup/import" class="btn btn-warning">Importar Backup</a>
+                    <a href="<?php echo Url::base();?>/extension/backup/create" class="btn btn-primary"><?php echo $lang['createbackup'];?></a>
+                    <a href="<?php echo Url::base();?>/extension/backup/import" class="btn btn-warning"><?php echo $lang['importbackup'];?></a>
 
                     <?php } ?>
                 </div>
@@ -37,14 +37,14 @@
                             $html .= '<div class="card-block" style="max-width: 30em;">';
                             $html .= '<div class="card-header bg-dark  text-light text-center p-3">'.File::name($item).'</div>';
                             $html .= '<div class="card-body bg-white b-bottom-dark text-center p-5">';
-                            $html .= '<a href="'.Url::base().'/extension/backup/download/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-dark m-3">Descargar</a>';
-                            $html .= '<a href="'.Url::base().'/extension/backup/delete/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-danger m-3">Borrar</a>';
+                            $html .= '<a href="'.Url::base().'/extension/backup/download/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-dark m-3">'.$lang['download'].'</a>';
+                            $html .= '<a href="'.Url::base().'/extension/backup/delete/'.Token::generate().'/'.base64_encode($item).'" class="btn btn-danger m-3">'.$lang['clear'].'</a>';
                             $html .= '</div>';
                             $html .= '</div>';
                         }
                         $html .= '</div>';
                     } else {
-                        $html = '<div class="alert alert-warning">Ningun Backup creado</div>';
+                        $html = '<div class="alert alert-warning">'.$lang['nobackup'].'</div>';
                     }
                     echo $html;
                 ?>

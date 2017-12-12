@@ -11,6 +11,25 @@ defined('BARRIO_ACCESS') or die('No direct script access.');
 class Media
 {
 
+
+    /**
+     * Language function
+     *
+     * @param string $name the name
+     */
+    public static $lang;
+    public static function lang($name = 'es')
+    {
+        $file = EXTENSIONS.'/media/lang.php';
+        if (file_exists($file) && is_file($file)) {
+             static::$lang = (include $file);
+             return static::$lang[$name];
+        } else {
+            die('Oops.. Donde esta el archivo de configuración ?!');
+        }
+    }
+
+
     /**
      * Format bytes
      *
@@ -43,7 +62,7 @@ class Media
                 $maxFileUpload = ini_get('upload_max_filesize');
                 $mfz = $maxFileUpload*1000000;
                 if ($file_size > $mfz) {
-                    Message::set('Error!','Archivo muy largo maximo '.$maxFileUpload);
+                    Message::set(L::error,L::ilog_imagetoolarge.' '.$maxFileUpload);
                     Url::redirect(Url::base().'/extension/media/new/file');
                     exit;
                 }
@@ -62,17 +81,17 @@ class Media
                     '3gp','mkv','ogv'
                 );
                 if (!in_array(File::ext($_FILES['file']['name']), $filetypes)) {
-                    Message::set('Error!','Este archivo no esta permitido');
+                    Message::set(L::error,L::ilog_filenotpermitted);
                     Url::redirect(Url::base().'/extension/media/new/file');
                 }
 
                 if (File::exists($fileUploaded)) {
-                    Message::set('Error!','El archivo ya existe');
+                    Message::set(L::error,L::ilog_filexists);
                     Url::redirect(Url::base().'/extension/media/new/file');
                 } else {
 
                     if (move_uploaded_file($_FILES['file']['tmp_name'], $fileUploaded)) {
-                        Message::set('Bien!','El archivo ha sido subido');
+                        Message::set(L::success, L::ilog_fileupload);
                         Url::redirect(Url::base().'/extension/media/');
                     }
                 }
@@ -190,7 +209,7 @@ class Media
                             </a>
                             <a class="text-dark text-deco-none"
                                 href="'.Url::base().'/extension/media/'.$name.'/editar/'.base64_encode($file).'">
-                                <i class="icon-pencil mr-2"></i> Editar
+                                <i class="icon-pencil mr-2"></i> '.L::edit.'
                             </a>
                         </div>
                     </div>';
@@ -206,7 +225,7 @@ class Media
 
             return $html;
         } else {
-            return '<div class="alert alert-info">Nada por aqui..</div>';
+            return '<div class="alert alert-info">'.L::nothinghere.'..</div>';
         }
     }
 

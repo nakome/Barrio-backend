@@ -23,7 +23,7 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <a class="text-success" href="<?php echo Url::base();?>/extension/media">Media</a> - Editar
+                <a class="text-success" href="<?php echo Url::base();?>/extension/media">Media</a> - <?php echo L::edit;?>
             </div>
             <div class="row">
                     <div class="col-8">
@@ -32,17 +32,17 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="b-bottom-dark text-dark"><i class="icon-info mr-2"></i> Informacion</div>
+                        <div class="b-bottom-dark text-dark"><i class="icon-info mr-2"></i> <?php echo L::info;?></div>
                         <form method="post" class="list-unstyled bg-white p-2">
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <input type="text" name="name" value="<?php echo File::name($info['name']);?>">
-                            <input type="text" class="bg-light text-dark" disabled value="Fecha de subida: <?php echo $info['date'];?>">
-                            <input type="text" class="bg-light text-dark" disabled value="Tamaño: <?php echo $info['size'];?>">
-                            <input type="text" class="bg-light text-dark" disabled value="Permisos: <?php echo substr(sprintf('%o', $info['fileperms']), -4);?>">
-                            <input type="text" class="bg-light text-dark" disabled value="Carpeta: <?php echo $folder; ?>">
-    
-                            <input type="submit" name="borrar" onclick="return confirm('Estas seguro!')" class="btn btn-danger" value="Borrar archivo">
-                            <input type="submit" name="renombrar" class="btn btn-primary" value="Renombrar">
+                            <input type="text" class="bg-light text-dark" disabled value="<?php echo L::update;?>: <?php echo $info['date'];?>">
+                            <input type="text" class="bg-light text-dark" disabled value="<?php echo L::size;?>: <?php echo $info['size'];?>">
+                            <input type="text" class="bg-light text-dark" disabled value="<?php echo L::permisions;?>: <?php echo substr(sprintf('%o', $info['fileperms']), -4);?>">
+                            <input type="text" class="bg-light text-dark" disabled value="<?php echo L::folder;?>: <?php echo $folder; ?>">
+
+                            <input type="submit" name="borrar" onclick="return confirm('Estas seguro!')" class="btn btn-danger" value="<?php echo L::removefile;?>">
+                            <input type="submit" name="renombrar" class="btn btn-primary" value="<?php echo L::renamefile;?>">
                             <a class="btn btn-info" href="<?php echo Url::base();?>/extension/media">Volver</a>
                         </form>
                     </div>

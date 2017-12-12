@@ -8,8 +8,13 @@
     if(Url::post('crear')){
         if(Token::check(Url::post('token'))){
             $date = date('d/m/Y');
-            $html = "Title: Titulo de la pagina
-Description: descripcion de la pagina
+
+            $pagetitle = L::pagetitle;
+            $pagedesc  = L::pagedesc;
+
+
+            $html = "Title: $pagetitle
+Description: $pagedesc
 Keywords:
 Published: false
 Author: me
@@ -21,11 +26,11 @@ Template: index
             $archivo = ROOTBASE.'/content/'.$dirExist.Url::parse(Url::post('url')).'.md';
             if(!File::exists($archivo)){
                 File::setContent($archivo,$html);
-                Message::set('Bien !','El pagina ha sido creada');
+                Message::set(L::success,L::ilog_savepage);
                 Url::redirect(Url::base().'/editar/archivo/'.base64_encode($dirExist.Url::parse(Url::post('url'))));
                 exit;
             }else{
-                Message::set('Error !','La pagina ya existe');
+                Message::set(L::error,L::ilog_pageexists);
                 Url::redirect(Url::base().'/crear/pagina');
                 exit;
             }
@@ -41,18 +46,18 @@ Template: index
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <strong>Seccion: </strong>Crear Pagina
+                <strong><?php echo L::section;?>: </strong><?php echo L::createpage;?>
             </div>
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-6">
                     <div class="bg-white b-light p-5">
-                        <h5 class="b-bottom-dark text-dark m-1">Esciba el nombre de la pagina</h5>
+                        <h5 class="b-bottom-dark text-dark m-1"><?php echo L::writepagename;?></h5>
                         <form method="post">
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <input type="text" name="url" id="url" value="nombre-de-la-pagina" required>
-                            <input type="submit" name="crear" class="btn btn-primary" value="Crear Pagina">
-                            <a href="<?php echo Url::base();?>" class="btn btn-danger">Cancelar</a>
+                            <input type="submit" name="crear" class="btn btn-primary" value="<?php echo L::save;?>">
+                            <a href="<?php echo Url::base();?>" class="btn btn-danger"><?php echo L::cancel;?></a>
                         </form>
                     </div>
                 </div>

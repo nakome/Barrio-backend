@@ -5,23 +5,25 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
 
-            <div class="bg-dark text-white p-3 pl-5"> Dashboard</div>
+            <div class="bg-dark text-white p-3 pl-5">
+                <?php echo L::dashboard();?>
+            </div>
 
             <div class="row">
                 <div class="col-4">
                     <div class="dashboard b-top-dark bg-white p-5">
                         <div class="text-dark b-bottom-dark p-1 m-1">
-                            Paginas
+                            <?php echo L::pages();?>
                             <small class="pull-right ml-3">
                                 <i class="icon-circle-with-plus text-dark"></i>
                                 <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/crear/pagina">
-                                    Pagina
+                                    <?php echo L::page();?>
                                 </a>
                             </small>
                             <small class="pull-right">
                                 <i class="icon-folder text-dark"></i>
                                 <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/crear/directorio">
-                                    Directorio
+                                    <?php echo L::dir();?>
                                 </a>
                             </small>
                         </div>
@@ -57,7 +59,9 @@
                 </div>
                 <div class="col-4">
                     <div class="dashboard b-top-dark bg-white p-5">
-                        <div class="text-dark b-bottom-dark p-1 m-1">Notas</div>
+                        <div class="text-dark b-bottom-dark p-1 m-1">
+                            <?php echo L::notes();?>
+                        </div>
                         <textarea class="bg-dark b-dark text-white" name="php" id="php" style="height:160px;overflow-x:auto;"></textarea>
                         <script>
                             document.querySelector('#php').value = window.localStorage.getItem('note');
@@ -72,11 +76,11 @@
                 <div class="col-4">
                     <div class="dashboard b-top-dark bg-white p-5">
                         <div class="text-dark b-bottom-dark p-1 m-1">
-                            Log
+                            <?php echo L::log();?>
                             <small class="pull-right">
                                 <i class="icon-trash text-dark"></i>
                                 <a class="text-deco-none text-dark" href="<?php echo Url::base();?>/borrar/log">
-                                    Borrar
+                                    <?php echo L::clear();?>
                                 </a>
                             </small>
                         </div>
@@ -94,11 +98,13 @@
             <div class="row">
                 <div class="col-4">
                     <div class="dashboard b-top-dark bg-white p-5">
-                        <div class="text-dark b-bottom-dark p-1">Direccion Web</div>
+                        <div class="text-dark b-bottom-dark p-1">
+                            <?php echo L::webaddress();?>
+                        </div>
                         <section class="bg-light b-dark p-3 mt-5 mb-3">
                             <i class="icon-link text-danger"></i> <a class="ml-3 text-dark text-deco-none"target="_blank" href="<?php echo Url::web();?>"><?php echo Url::web();?></a>
                         </section>
-                        <section class="updates text-white mt-2 p-3 b-danger bg-danger">Actualizado a la version v1.0</section>
+                        <section class="updates text-white mt-2 p-3 b-danger bg-danger"><?php echo L::updateto();?> v<?php echo Router::VERSION;?></section>
                     </div>
                 </div>
                 <div class="col-4">
@@ -110,7 +116,9 @@
                                 return $setting;
                             }
                         ?>
-                        <div class="text-dark b-bottom-dark p-1">Informacion Servidor</div>
+                        <div class="text-dark b-bottom-dark p-1">
+                            <?php echo L::serverinfo();?>
+                        </div>
                         <ul class="list-unstyled p-2">
                             <li><b>Server Type:</b> <?php print $_SERVER['SERVER_SOFTWARE']; ?></li>
                             <li><b>PHP Version:</b> <?php print phpversion()?></li>
@@ -122,7 +130,9 @@
                 </div>
                 <div class="col-4">
                     <div class="dashboard b-top-dark  bg-white p-5">
-                        <div class="text-dark b-bottom-dark p-1">Permisos</div>
+                        <div class="text-dark b-bottom-dark p-1">
+                            <?php echo L::permisions();?>
+                        </div>
                         <ul class="list-unstyled p-2">
                             <?php clearstatcache(); ?>
                             <li><b>Admin: </b> <?php echo substr(sprintf('%o', fileperms(ROOT)), -4); ?></li>

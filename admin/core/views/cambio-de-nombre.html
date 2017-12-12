@@ -11,11 +11,11 @@
         if(Token::check(Url::post('token'))){
             $dir = ROOTBASE.'/content';
             if(File::rename($dir.'/'.$name.'.md',$dir.'/'.$dirExist.Url::parse(Url::post('url')).'.md')){
-                Message::set('Bien !','El archivo ha sido renombrado');
+                Message::set(L::success,L::ilog_renamefile);
                 Url::redirect(Url::base().'/editar/archivo/'.base64_encode($directorio.'/'.Url::parse(Url::post('url'))));
                 exit;
             }else{
-                Message::set('Error !','El archivo no ha sido renombrado');
+                Message::set(L::error,L::ilog_errrenamefile);
                 Url::redirect(Url::base().'/cambiar/url/'.base64_encode($directorio.'/'.File::name($name)));
                 exit;
             }
@@ -31,19 +31,19 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <strong>Seccion: </strong>Cambiar nombre
+                <strong><?php echo L::section;?>: </strong><?php echo L::changename;?>
             </div>
 
             <div class="row">
                 <div class="col-3"></div>
                 <div class="col-6">
                     <div class="bg-white b-light p-5">
-                        <h5 class="b-bottom-dark text-dark m-1">Esciba la nueva direccíon</h5>
+                        <h5 class="b-bottom-dark text-dark m-1"><?php echo L::changeaddress;?></h5>
                         <form method="post">
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <input type="text" name="url" id="url" value="<?php echo File::name($name);?>" required>
-                            <input type="submit" name="renombrar" class="btn btn-primary" value="Cambiar nombre">
-                            <a href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>" class="btn btn-danger">Cancelar</a>
+                            <input type="submit" name="renombrar" class="btn btn-primary" value="<?php echo L::save;?>">
+                            <a href="<?php echo Url::base().'/editar/archivo/'.base64_encode($name);?>" class="btn btn-danger"><?php echo L::cancel;?></a>
                         </form>
                     </div>
                 </div>

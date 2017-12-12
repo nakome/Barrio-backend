@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 defined('BARRIO_ACCESS') or die('Sin acceso al archivo.');
 
@@ -15,6 +15,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/media/controllers/media.class.php';
         Admin::exists();
+        $lang = Media::lang(Router::$config['lang']);
         include EXTENSIONS.'/media/templates/edit.html';
         exit;
     }
@@ -28,6 +29,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/media/controllers/media.class.php';
         Admin::exists();
+        $lang = Media::lang(Router::$config['lang']);
         include EXTENSIONS.'/media/templates/newfile.html';
         exit;
     }
@@ -41,6 +43,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/media/controllers/media.class.php';
         Admin::exists();
+        $lang = Media::lang(Router::$config['lang']);
         include EXTENSIONS.'/media/templates/newfolder.html';
         exit;
     }
@@ -56,6 +59,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/media/controllers/media.class.php';
         Admin::exists();
+        $lang = Media::lang(Router::$config['lang']);
         include EXTENSIONS.'/media/templates/index.html';
         exit;
     }
@@ -73,6 +77,7 @@ $R->Route(
         Admin::exists();
         $name = 'images';
         $num = 0;
+        $lang = Media::lang(Router::$config['lang']);
         include EXTENSIONS.'/media/templates/index.html';
         exit;
     }

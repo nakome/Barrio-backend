@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 defined('BARRIO_ACCESS') or die('Sin acceso al archivo.');
 
@@ -10,6 +10,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/backup/controllers/backup.class.php';
         Admin::exists();
+        $lang = Backup::lang(Router::$config['lang']);
         if (Token::check($token)) {
             Backup::download($name);
         } else {
@@ -26,6 +27,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/backup/controllers/backup.class.php';
         Admin::exists();
+        $lang = Backup::lang(Router::$config['lang']);
         if (Token::check($token)) {
             Backup::delete($name);
         } else {
@@ -43,7 +45,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/backup/controllers/backup.class.php';
         Admin::exists();
-
+        $lang = Backup::lang(Router::$config['lang']);
         if (array_key_exists('import', $_POST)) {
             if (Token::check($_POST['token'])) {
                 if (array_key_exists('zip_file', $_FILES)) {
@@ -68,6 +70,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/backup/controllers/backup.class.php';
         Admin::exists();
+        $lang = Backup::lang(Router::$config['lang']);
         Backup::generate();
         exit;
     }
@@ -80,6 +83,7 @@ $R->Route(
         include CONTROLLERS.'/admin.class.php';
         include EXTENSIONS.'/backup/controllers/backup.class.php';
         Admin::exists();
+        $lang = Backup::lang(Router::$config['lang']);
         include EXTENSIONS.'/backup/templates/index.html';
         exit;
     }

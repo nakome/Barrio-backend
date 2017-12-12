@@ -9,8 +9,8 @@
                 <form method="post" class="card-body p-5">
                     <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                     <input name="password" type="password"  class="mb-4" required placeholder="*****************">
-                    <input class="btn btn-danger" name="auth" type="submit" value="Entrar">
-                    <a href="<?php echo Url::web();?>" class="btn btn-info">Volver</a>
+                    <input class="btn btn-danger" name="auth" type="submit" value="<?php echo L::enter;?>">
+                    <a href="<?php echo Url::web();?>" class="btn btn-info"><?php echo L::back;?></a>
                 </form>
             </div>
         </div>

@@ -6,7 +6,7 @@
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content">
             <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-                <a class="text-deco-none text-success" href="<?php echo Url::base();?>/extension/plantillas">Plantillas</a> / editar
+                <a class="text-deco-none text-success" href="<?php echo Url::base();?>/extension/plantillas"><?php echo $lang['templates'];?></a> / <?php echo $lang['edit'];?>
             </div>
             <div class="row">
                 <div class="col-3">
@@ -111,8 +111,8 @@
                         <form method="post">
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                             <textarea name="content" class="bg-dark text-white" style="min-height:30em"><?php echo htmlentities(File::getContent($name));?></textarea>
-                            <input type="submit" name="guardar" class="btn btn-primary" value="Guardar">
-                            <input type="submit" name="guardarysalir" class="btn btn-info" value="Guardar y Salir">
+                            <input type="submit" name="guardar" class="btn btn-primary" value="<?php echo $lang['save'];?>">
+                            <input type="submit" name="guardarysalir" class="btn btn-info" value="<?php echo $lang['saveandout'];?>">
                         </form>
                      </div>
                 </div>

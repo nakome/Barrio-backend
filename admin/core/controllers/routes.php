@@ -51,10 +51,10 @@ $R->Route(
             if (Dir::exists(ROOTBASE.'/content/imagenes/'.$name)) {
                 Dir::delete(ROOTBASE.'/content/imagenes/'.$name);
             }
-            Message::set('Bien !', 'El archivo ha sido borrado');
+            Message::set(L::success, L::ilog_deletefile);
             Url::redirect(Url::base());
         } else {
-            Message::set('Error !', 'El archivo no ha sido borrado');
+            Message::set(L::error, L::ilog_errdeletefile);
             Url::redirect(Url::base());
         }
     }
@@ -71,10 +71,10 @@ $R->Route(
             if (!Dir::exists(ROOTBASE.'/content/imagenes/'.$archivo)) {
                 Dir::delete(ROOTBASE.'/content/imagenes/'.$archivo);
             }
-            Message::set('Bien !', 'El directorio ha sido borrado');
+            Message::set(L::success, L::ilog_deletedir);
             Url::redirect(Url::base());
         } else {
-            Message::set('Error !', 'El directorio no ha sido borrado');
+            Message::set(L::error, L::ilog_errdeletedir);
             Url::redirect(Url::base());
         }
     }

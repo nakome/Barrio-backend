@@ -17,7 +17,7 @@ class Admin
      *
      * @return array
      */
-    public static function loadExtensions()
+    public static function loadExtensionsList()
     {
         // http://stackoverflow.com/questions/14680121/include-just-files-in-scandir-array
         $extensions = array_filter(scandir(EXTENSIONS), function ($item) {
@@ -51,8 +51,6 @@ class Admin
             }
         }
     }
-
-
 
     /**
      * Record logs
@@ -99,7 +97,7 @@ class Admin
         $file = ROOT.'/logs.txt';
         if (File::exists($file)) {
             File::setContent($file, '[]', true, false, '0755');
-            Message::set('Bien !', 'El archivo ha sido borrado');
+            Message::set(L::success, L::ilog_deletefile);
             Url::redirect(Url::base());
         }
     }
@@ -112,11 +110,11 @@ class Admin
     public static function exists()
     {
         if (Session::get('Barrio_uid') &&
-        Session::get('Barrio_token') &&
-        Session::get('Barrio_time')) {
+            Session::get('Barrio_token') &&
+            Session::get('Barrio_time')) {
             return true;
         } else {
-            self::log('Intento de acceso');
+            self::log(L::ilog_attempsaccess);
             Url::redirect(Url::base());
         }
     }
@@ -134,13 +132,13 @@ class Admin
         if ($attemps > 4) {
             setcookie('blockUser', true, time() + (60 * 5)); //(60 * 20) for 20 minutes
             Session::set('Barrio_attemps', 0);
-            die('<style>body{text-align:center}</style><h2>Error, Hubo muchos intentos de acceso, Por favo espere 5 min</h2>');
-            self::log("Intentos de acceso $attemps");
+            die('<style>body{text-align:center}</style><h2>'.L::error.', '.L::login_manyattemps.'</h2>');
+            self::log(L::ilog_attemps.' '.$attemps);
             exit();
         }
 
         if (isset($_COOKIE['blockUser'])) {
-            die('<style>body{text-align:center}</style><h2>Error, Hubo muchos intentos de acceso, Por favo espere 5 min</h2>');
+            die('<style>body{text-align:center}</style><h2>Error, '.L::ilog_manyattemps.'</h2>');
             exit();
         } else {
             if (Url::post('auth')) {
@@ -153,13 +151,15 @@ class Admin
                         Session::set('Barrio_time', time());
                         // set login attemps to 0 and redirect
                         Session::set('Barrio_attemps', 0);
-                        self::log("Usuario entra en el administrador");
+                        self::log(L::ilog_userlogin);
                         Url::redirect(Url::base());
                     } else {
                         $count = $attemps + 1;
                         Session::set('Barrio_attemps', $count);
-                        self::log("Intentos de acceso $count");
-                        Message::set('Error', 'El password no es correcto fallos: '.Session::get('Barrio_attemps'));
+                        self::log(L::ilog_attemps.' '.$count);
+                        Message::set(
+                            L::error,
+                            L::ilog_badpassword.''.L::failures.': '.Session::get('Barrio_attemps'));
                         Url::redirect(Url::base());
                     }
                 } else {
@@ -180,7 +180,7 @@ class Admin
         Session::delete('Barrio_token');
         Session::delete('Barrio_time');
         Session::destroy();
-        self::log("Usuario sale de el administrador");
+        self::log(L::ilog_userlogout);
         Url::redirect(Url::base());
         exit;
     }
@@ -277,11 +277,11 @@ class Admin
                 $html .= "$content";
 
                 if (File::setContent($dir, $html)) {
-                    Message::set('Bien!', 'El archivo ha sido guardado');
-                    self::log('Archivo '.$name.' actualizado');
+                    Message::set(L::success, L::ilog_savefile);
+                    self::log(L::ilog_updatefile.' '.$name);
                     Url::redirect(Url::base().'/editar/'.$location.'/'.base64_encode($name));
                 } else {
-                    Message::set('Error!', 'El archivo no ha sido guardado');
+                    Message::set(L::error, L::ilog_errsavefile);
                     Url::redirect(Url::base().'/editar/'.$location.'/'.base64_encode($name));
                 };
             } else {

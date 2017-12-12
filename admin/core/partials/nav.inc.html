@@ -2,22 +2,22 @@
     <header>Menu</header>
     <section>
         <ul class="navigation">
-            <li><a href="<?php echo Url::base();?>" class="link" >Dashboard</a>
+            <li><a href="<?php echo Url::base();?>" class="link" ><?php echo L::dashboard();?></a>
         </ul>
 
         <div id="extensiones" class="accordion m-0">
             <div class="accordion-title bg-dark">
-                <a href="#">Extensiones</a>
+                <a href="#"><?php echo L::extensions();?></a>
             </div>
             <div class="accordion-content bg-dark text-white hide">
                <ul class="list-unstyled">
-                <?php Admin::loadExtensions(); ?>
+                <?php Admin::loadExtensionsList(); ?>
                </ul>
             </div>
         </div>
 
         <ul class="navigation">
-            <li><a href="<?php echo Url::base();?>/usuario/salir" class="link" >Salir</a>
+            <li><a href="<?php echo Url::base();?>/usuario/salir" class="link" ><?php echo L::logout();?></a>
         </ul>
     </section>
 </nav>
