@@ -143,7 +143,7 @@
                                 <label for="published"><?php echo L::published;?> <small class="text-dark"><?php echo ($header['published'] == 'true') ? L::checkyes : L::checkyes;?></small></label>
                                 <select name="published">
                                     <option value="si"><?php echo L::checkyes;?></option>
-                                    <option value="no"><?php echo L::checkyes;?></option>
+                                    <option value="no"><?php echo L::checkno;?></option>
                                 </select>
                                 <?php } ?>
                             </div>
@@ -219,6 +219,8 @@
                                             <option value="icon">{Icon}</option>
                                             <option value="youtube">{Youtube}</option>
                                             <option value="vimeo">{Vimeo}</option>
+                                            <option value="divider">{divider}</option>
+                                            <option value="more">{more}</option>
                                         </select>
 
                                         <span class="editor-divider"></span>

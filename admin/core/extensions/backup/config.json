@@ -1,9 +1,0 @@
-[{
-    "name": "Backup",
-    "description": "Crear backups de la web facilmente",
-    "filename": "backup",
-    "author": "Moncho Varela",
-    "url": "https:\/\/monchovarela.es",
-    "version": "1.0.0",
-    "enabled": true
-}]

@@ -3574,11 +3574,11 @@ a.header-title:hover {
 }
 
 .full-width textarea {
-    height: calc(100vh - 19em)!important;
+    height: calc(100vh - 13em)!important;
     padding: 0;
     border-top: 1px solid #d4d4d4;
-    background: #000;
-    color: #ffffff;
+    background: #ffffff;
+    color: #000000;
     margin: 0!important;
     width: 100%!important;
     border-radius: 0;

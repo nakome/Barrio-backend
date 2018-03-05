@@ -6,7 +6,7 @@
                 if(Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
                     Dir::delete(ROOTBASE.'/content/imagenes/'.$name);
                 }
-                Message::set(L::success, L::ilog_dirdelete);
+                Message::set(L::success, L::ilog_deletedir);
                 Url::redirect(Url::base());
             }
         }else{

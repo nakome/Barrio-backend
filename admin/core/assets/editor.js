@@ -64,6 +64,14 @@ var Editor=function(e){var t=this,a=document,n=[],l=0,r=null;t.area=void 0!==e?e
         'icon': function(){
             editor.wrap("{Icon type='","mobile'}");
         },
+        'divider': function(){
+            editor.insert("{divider}");
+        },
+        'more': function(){
+            editor.insert("{more}");
+        },
+
+
 
 
 

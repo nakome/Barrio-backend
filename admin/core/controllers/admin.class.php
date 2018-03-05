@@ -43,7 +43,7 @@ class Admin
                 $enabled = $obj['enabled'];
                 if ($enabled) {
                     echo '<li class="p-2">
-                        <a href="'.Url::base().'/extension/'.$obj['filename'].'" class="text-deco-none text-light" >
+                        <a href="'.Url::base().'/extension/'.$obj['filename'].'" class="text-deco-none" >
                             '.$obj['name'].' <i class="text-info">ext</i>
                         </a>
                     </li>';
@@ -96,7 +96,7 @@ class Admin
     {
         $file = ROOT.'/logs.txt';
         if (File::exists($file)) {
-            File::setContent($file, '[]', true, false, '0755');
+            File::setContent($file, '[]');
             Message::set(L::success, L::ilog_deletefile);
             Url::redirect(Url::base());
         }
