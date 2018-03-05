@@ -57,6 +57,7 @@ const renamefile = 'Renombrar archivo';
 const updatefile = 'Actualizar archivo';
 const removefile = 'Borrar archivo';
 const update = 'Actualizado';
+const viewimages = 'Ver imagenes';
 const changeaddress = 'Cambiar direccion';
 const createdir = 'Crear directorio';
 const createpage = 'Crear pagina';

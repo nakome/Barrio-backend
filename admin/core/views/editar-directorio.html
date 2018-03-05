@@ -3,21 +3,21 @@
     $directorio = base64_encode($name);
 
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/editor.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/build/css/editor.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/editor.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/build/js/editor.js"></script>';
     });
 ?>
-
 <?php include PARTIALS.'/head.inc.html';?>
 <div id="page">
     <?php include PARTIALS.'/nav.inc.html';?>
     <main id="wrapper">
         <?php include PARTIALS.'/header.inc.html';?>
         <div id="content" class="mb-5">
-            <div class="b-bottom-dark b-left-dark bg-dark text-white p-3 pl-5">
-               <strong><?php echo L::section;?>: </strong> <?php echo L::edit;?> - <?php echo ucfirst($name);?>
+            <div class="bg-light p-3 pl-5">
+               <b class="text-info"><?php echo L::section;?>: </b> 
+               <?php echo L::edit;?> - <?php echo ucfirst($name);?>
             </div>
             <div class="row">
                 <div class="col-4">
@@ -112,21 +112,32 @@
                         $header = Admin::getPageHeaders($name.'/index');
                         $content = Admin::getPageContent($name.'/index');
                     ?>
+                    
                     <form method="post">
 
                         <input type="hidden" name="token" value="<?php echo Token::generate();?>">
 
+                        <?php if($name == '404'){ ?>
                         <div class="row">
                             <div class="col-6">
                                 <label for="title"><?php echo L::title;?></label>
                                 <input type="text" name="title" value="<?php echo $header['title'];?>" required>
                             </div>
-                            <?php if($name != '404'){ ?>
+                            <div class="col-6">
+                                <label for="template"><?php echo L::template;?></label>
+                                <input type="text" name="template" placeholder="index" value="<?php echo $header['template'];?>" required>
+                            </div>
+                        </div>                
+                        <?php }else{ ?>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="title"><?php echo L::title;?></label>
+                                <input type="text" name="title" value="<?php echo $header['title'];?>" required>
+                            </div>
                             <div class="col-6">
                                 <label for="image"><?php echo L::image;?></label>
                                 <input type="text" name="image" placeholder="Link de la imagen" value="<?php echo $header['image'];?>">
                             </div>
-                            <?php } ?>
                         </div>
                         <div class="row">
                             <div class="col-4">
@@ -134,26 +145,26 @@
                                 <input type="text" name="template" placeholder="index" value="<?php echo $header['template'];?>" required>
                             </div>
                             <div class="col-4">
-                                <?php if($name != '404'){ ?>
-                                <label for="published"><?php echo L::published;?> <small class="text-dark"><?php echo $header['published'];?></small></label>
+
+                                <label for="published"><?php echo L::published;?> <small class="text-dark"><?php echo ($header['published'] == 'true') ? L::checkyes : L::checkyes;?></small></label>
                                 <select name="published">
                                     <option value="si"><?php echo L::checkyes;?></option>
                                     <option value="no"><?php echo L::checkno;?></option>
                                 </select>
-                                <?php } ?>
+                    
                             </div>
-                            <?php if($name != '404'){ ?>
+                          
                             <div class="col-4">
                                 <label for="keywords"><?php echo L::keywords;?></label>
                                 <input type="text" name="keywords" placeholder="Palabras clave" value="<?php echo $header['keywords'];?>">
                             </div>
-                            <?php } ?>
+                    
                         </div>
-                        <?php if($name != '404'){ ?>
+                        
                         <div class="row">
                             <div class="col-4">
                                 <label for="author"><?php echo L::author;?></label>
-                                <input type="text" name="author"  value="<?php echo $header['author'];?>">
+                                <input type="text" name="author" placeholder="Autor de la pagina" value="<?php echo $header['author'];?>">
                             </div>
                             <div class="col-4">
                                 <label for="date"><?php echo L::date;?></label>
@@ -170,7 +181,10 @@
                                 </select>
                             </div>
                         </div>
-                        <?php } ?>
+                        <?php };?>
+
+
+                    
                         <div class="row">
                             <div class="col-12">
                                 <label for="description"><?php echo L::description;?></label>
@@ -178,8 +192,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12" id="texto">
-                                <label for="content"> <?php echo L::content;?> </label>
+                            <div class="col-12"  id="texto">
+                                <label for="content">
+                                    <?php echo L::content;?>
+                                </label>
                                 <div class="editor">
                                     <div class="editor-control" id="editor-control">
                                         <a href="#h1">H1</a>
@@ -197,6 +213,7 @@
                                         <a href="#link">link</a>
                                         <a href="#image">Img</a>
                                         <span class="editor-divider"></span>
+
                                         <select name="shortcodes" id="shortcodes">
                                             <option value="">Shortcodes</option>
                                             <option value="text">{Text}</option>
@@ -214,6 +231,7 @@
                                             <option value="divider">{divider}</option>
                                             <option value="more">{more}</option>
                                         </select>
+
                                         <span class="editor-divider"></span>
 
                                         <a href="#" id="btnExpand" class="text-deco-none text-dark">
@@ -222,7 +240,7 @@
                                     </div>
                                     <textarea name="content" class="editor-area" id="editor-area" rows="10"><?php echo $content;?></textarea>
                                     <div class="row">
-                                        <div class="col-12  mt-1">
+                                        <div class="col-12  mt-2">
                                             <input class="btn btn-primary" type="submit" name="guardar" value="<?php echo L::save;?>">
                                             <a href="<?php echo Url::base();?>" class="btn btn-danger"><?php echo L::cancel;?></a>
                                         </div>
@@ -231,6 +249,8 @@
                             </div>
                         </div>
                     </form>
+
+
                 </div>
             </div>
         </div>
