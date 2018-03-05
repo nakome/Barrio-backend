@@ -4,14 +4,11 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     prefixer = require('gulp-autoprefixer'),
     uglify = require('gulp-uglify'),
-    sourcemaps = require('gulp-sourcemaps'),
     cssmin = require('gulp-clean-css'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     rimraf = require('rimraf'),
-    rigger = require('rigger'),
-    browserSync = require("browser-sync"),
-    reload = browserSync.reload;
+    rigger = require('rigger');
 
 
 var path = {
