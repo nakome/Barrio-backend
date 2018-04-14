@@ -6,12 +6,12 @@
     $linkVolver = rtrim($linkVolver, '/');
 
     $error = '';
-    $AllowedExtensions = array('gif','jpeg','jpg','png','svg');
+    $AllowedExtensions = array('JPG','JPEG','gif','jpeg','jpg','png','svg');
     if(Url::post('uploadFile')){
       if(Url::post('token')){
         $files = $_FILES['file']['name'];
-        if(!Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
-            Dir::create(ROOTBASE.'/content/imagenes/'.$name);
+        if(!Dir::exists(ROOTBASE.'/public/imagenes/'.$name)){
+            Dir::create(ROOTBASE.'/public/imagenes/'.$name);
         }
         $file_size = $_FILES['file']['size'];
         if (($file_size > 3097152)){
@@ -20,7 +20,7 @@
             exit;
         }
 
-        $fileUploaded = ROOTBASE.'/content/imagenes/'.$name.'/'.Url::parse(File::name($_FILES['file']['name'])).'.'.File::ext($_FILES['file']['name']);
+        $fileUploaded = ROOTBASE.'/public/imagenes/'.$name.'/'.Url::parse(File::name($_FILES['file']['name'])).'.'.File::ext($_FILES['file']['name']);
 
         if(File::exists($fileUploaded)){
             $error = '<span class="bg-danger text-white p-3">'.L::ilog_fileexists.'</span>';

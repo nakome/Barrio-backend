@@ -3,10 +3,10 @@
     $directorio = base64_encode($name);
 
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/build/css/editor.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/css/editor.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/build/js/editor.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/js/editor.js"></script>';
     });
 ?>
 <?php include PARTIALS.'/head.inc.html';?>

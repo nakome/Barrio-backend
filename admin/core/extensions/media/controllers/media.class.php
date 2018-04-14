@@ -55,7 +55,7 @@ class Media
             if (Url::post('token')) {
                 $files = $_FILES['file']['name'];
                 // create if not exists
-                $dir =  ROOTBASE.'/content/imagenes/media/';
+                $dir =  ROOTBASE.'/public/imagenes/media/';
 
                 // max storage file
                 $file_size = $_FILES['file']['size'];
@@ -123,7 +123,7 @@ class Media
         $filetypesOthers = array('zip','tar','tgz','rar');
 
         // create if not exists
-        $dir =  ROOTBASE.'/content/imagenes';
+        $dir =  ROOTBASE.'/public/imagenes';
         if (!Dir::exists($dir)) {
             Dir::create($dir, 0777);
         }
@@ -131,22 +131,22 @@ class Media
         $files = '';
         switch($name){
         case 'images':
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesImages);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesImages);
             break;
         case 'video':
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesVideo);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesVideo);
             break;
         case 'music':
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesMusic);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesMusic);
             break;
         case 'documents':
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesDocs);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesDocs);
             break;
         case 'others':
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesOthers);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesOthers);
             break;
         default:
-            $files = File::scan(ROOTBASE.'/content/imagenes/', $filetypesImages);
+            $files = File::scan(ROOTBASE.'/public/imagenes/', $filetypesImages);
             break;
         }
 
@@ -307,8 +307,9 @@ class Media
 
         $html = '';
         if (in_array(File::ext($file), $allowExt)) {
+            $img = str_replace(DIRECTORY_SEPARATOR,'/',$image);
             $html .= '<div class="image-preview">'.$template.'</div>';
-            $html .= '<pre class="bg-dark text-white p-3" style="overflow-x:auto;">![]('.$image.')</pre>';
+            $html .= '<pre class="bg-dark text-white p-3" style="overflow-x:auto;">![]('.$img.')</pre>';
         }
         echo $html;
     }

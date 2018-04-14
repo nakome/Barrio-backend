@@ -71,6 +71,7 @@ const nothinghere = 'Nada por aqui';
 const ilog_suretodeletedir = 'Esta seguro de borrar el directorio!';
 const ilog_direxists = 'El directorio ya existe';
 const ilog_filexists = 'El archivo ya existe';
+const ilog_fileexists = 'El archivo ya existe';
 const ilog_filenotpermitted = 'Este archivo no esta permitido';
 const ilog_savefile = 'El archivo ha sido guardado';
 const ilog_updatefile = 'El archivo ha sido actualizado';

@@ -1,10 +1,10 @@
 <?php Admin::saveFile(ROOTBASE.'/content/'.$name.'.md',$name,'archivo'); ?>
 <?php
     Action::add('head',function(){
-        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/build/css/editor.css" />';
+        echo '<link rel="stylesheet" href="'.Url::base().'/core/assets/css/editor.css" />';
     });
     Action::add('footer',function(){
-        echo '<script rel="javascript" src="'.Url::base().'/core/assets/build/js/editor.js"></script>';
+        echo '<script rel="javascript" src="'.Url::base().'/core/assets/js/editor.js"></script>';
     });
 ?>
 
@@ -68,8 +68,8 @@
                         <div class="card-body p-3">
                             <ul class="list-unstyled m-0" style="height:10em;overflow-x:auto;">
                             <?php
-                                if(Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
-                                    $archivos = File::scan(ROOTBASE.'/content/imagenes/'.$name);
+                                if(Dir::exists(ROOTBASE.'/public/imagenes/'.$name)){
+                                    $archivos = File::scan(ROOTBASE.'/public/imagenes/'.$name);
                                     foreach($archivos as $item){
                                         echo '<li>
                                             <i class="icon-file-text2 mr-2"></i>
@@ -81,7 +81,7 @@
                                 }
                             ?>
                             </ul>
-                            <p><pre><code class="bg-dark text-white">Ruta:  /content/imagenes/<?php echo $name;?>/<em class="image-preview"></em></code></pre></p>
+                            <p><pre><code class="bg-dark text-white">Ruta:  public/imagenes/<?php echo $name;?>/<em class="image-preview"></em></code></pre></p>
 
                         </div>
                     </div>
@@ -225,16 +225,16 @@
                                             <option value="text">{Text}</option>
                                             <option value="progressBar">{ProgressBar}</option>
                                             <option value="iframe">{Iframe}</option>
-                                            <option value="blocks">{Blocks}</option>
-                                            <option value="block">{Block}</option>
-                                            <option value="service">{Service}</option>
+                                            <option value="row">{Row}</option>
+                                            <option value="col">{Col}</option>
                                             <option value="card">{Card}</option>
                                             <option value="alert">{Alert}</option>
                                             <option value="btn">{Btn}</option>
                                             <option value="icon">{Icon}</option>
                                             <option value="youtube">{Youtube}</option>
                                             <option value="vimeo">{Vimeo}</option>
-                                            <option value="divider">{divider}</option>
+                                            <option value="divider">{Divider}</option>
+                                            <option value="spcae">{Space}</option>
                                             <option value="more">{more}</option>
                                         </select>
 

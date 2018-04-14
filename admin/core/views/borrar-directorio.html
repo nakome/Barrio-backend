@@ -3,8 +3,8 @@
         if(Token::check(Url::post('token'))){
             Dir::delete(ROOTBASE.'/content/'.$name);
             if(!Dir::exists(ROOTBASE.'/content/'.$name)){
-                if(Dir::exists(ROOTBASE.'/content/imagenes/'.$name)){
-                    Dir::delete(ROOTBASE.'/content/imagenes/'.$name);
+                if(Dir::exists(ROOTBASE.'/public/imagenes/'.$name)){
+                    Dir::delete(ROOTBASE.'/public/imagenes/'.$name);
                 }
                 Message::set(L::success, L::ilog_deletedir);
                 Url::redirect(Url::base());

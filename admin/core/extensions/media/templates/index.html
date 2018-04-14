@@ -8,6 +8,22 @@
         $javascript = '<script rel="javascript" src="'.Url::base().'/core/extensions/media/assets/script.js"></script>';
         echo $javascript;
     });
+
+    // remove empty dirs
+    function RemoveEmptySubFolders($path){
+      $empty=true;
+      foreach (glob($path.DIRECTORY_SEPARATOR."*") as $file){
+         if (is_dir($file)){
+            if (!RemoveEmptySubFolders($file)) $empty=false;
+         }else{
+            $empty=false;
+         }
+      }
+      if ($empty) rmdir($path);
+      return $empty;
+    }
+    if(Dir::exists(ROOTBASE.'/public/imagenes'))
+        RemoveEmptySubFolders(ROOTBASE.'/public/imagenes');
 ?>
 
 <?php include PARTIALS.'/head.inc.html';?>
@@ -62,7 +78,7 @@
                                     </a>
                                 </li>
 
-                                <li class="p-2 text-center"><b>Total: </b> <?php echo Media::format(Dir::size(ROOTBASE.'/content/imagenes'));?></li>
+                                <li class="p-2 text-center"><b>Total: </b> <?php echo Media::format(Dir::size(ROOTBASE.'/public/imagenes'));?></li>
                             </ul>
                         </div>
                     </div>

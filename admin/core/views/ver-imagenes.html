@@ -2,7 +2,7 @@
     $imagen = str_replace(ROOTBASE,Url::web(),$name);
     $info = File::info($name);
 
-    $linkVolver = str_replace(ROOTBASE.'/content/imagenes/','',$name);
+    $linkVolver = str_replace(ROOTBASE.'/public/imagenes/','',$name);
     $linkVolver = str_replace(File::name($name).'.'.File::ext($name),'',$linkVolver);
     $linkVolver = str_replace('\\', '/', $linkVolver);
     $linkVolver = rtrim($linkVolver, '/');
@@ -58,9 +58,10 @@
                         <?php
                             $AllowedExtensions = array('gif','jpeg','jpg','png','svg');
                             $html = '';
+                            $img = str_replace(DIRECTORY_SEPARATOR,'/',$imagen);
                             if(in_array(File::ext($name), $AllowedExtensions)){
                                 $html .= '<div class="image-preview center"><img src="'.$imagen.'" alt="" style="max-width:100%;"></div>';
-                                $html .= '<pre class="bg-dark text-white p-3" style="overflow-x:auto;">![]('.$imagen.')</pre>';
+                                $html .= '<pre class="bg-dark text-white p-3" style="overflow-x:auto;">![]('.$img.')</pre>';
                             }
                             echo $html;
                         ?>
